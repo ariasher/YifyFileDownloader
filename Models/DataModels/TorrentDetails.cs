@@ -28,7 +28,7 @@ public class TorrentDetails : BaseModel
 
     [Required]
     [Column("MOVIE_ID")]
-    public int MovieId { get; set; }
+    public long MovieId { get; set; }
 
     [NotMapped]
     public MovieDetails MovieDetails { get; set; }

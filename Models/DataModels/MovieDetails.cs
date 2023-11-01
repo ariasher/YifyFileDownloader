@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace YifyFileDownloader.Models.DataModels;
 
+[Table("MOVIE_DETAILS")]
 public class MovieDetails : BaseModel
 {
     [Required]
