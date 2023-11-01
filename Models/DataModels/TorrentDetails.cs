@@ -23,4 +23,7 @@ public class TorrentDetails : BaseModel
 
     [Required]
     public double Rating { get; set; }
+
+    [Required]
+    public long TorrentId { get; set; }
 }
