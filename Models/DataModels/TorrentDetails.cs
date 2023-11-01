@@ -7,23 +7,25 @@ namespace YifyFileDownloader.Models.DataModels;
 public class TorrentDetails : BaseModel
 {
     [Required]
-    [StringLength(100)]
-    public string Name { get; set; }
-
-    [Required]
     [StringLength(200)]
+    [Column("TORRENT_URL")]
     public string URL { get; set; }
 
     [Required]
-    public int Year { get; set; }
+    [StringLength(100)]
+    [Column("TORRENT_HASH")]
+    public string Hash { get; set; }
 
     [Required]
     [StringLength(50)]
-    public string Genre { get; set; }
+    [Column("TORRENT_QUALITY")]
+    public string Quality { get; set; }
 
     [Required]
-    public double Rating { get; set; }
+    [StringLength(50)]
+    [Column("TORRENT_TYPE")]
+    public string Type { get; set; }
 
-    [Required]
-    public long TorrentId { get; set; }
+    [NotMapped]
+    public MovieDetails MovieDetails { get; set; }
 }

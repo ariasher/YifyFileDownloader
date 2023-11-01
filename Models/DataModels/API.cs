@@ -8,17 +8,20 @@ public class API : BaseModel
 {
     [Required]
     [StringLength(100)]
-    public string ApiName { get; set; }
+    [Column("API_NAME")]
+    public string Name { get; set; }
 
     [Required]
     [StringLength(200)]
-    public string ApiEndpoint { get; set; }
+    [Column("API_ENDPOINT")]
+    public string Endpoint { get; set; }
 
     [Required]
     [StringLength(400)]
+    [Column("API_PAYLOAD")]
     public string Payload { get; set; }
 
     [Required]
-    [StringLength(2000)]
+    [Column("API_RESPONSE", TypeName = "VARCHAR(MAX)")]
     public string Response { get; set; }
 }
