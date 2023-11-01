@@ -21,8 +21,8 @@ namespace YifyFileDownloader
         {
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
-
-            var host = Startup.BuildHost();
+            
+            var host = Startup.BuildHost(Log.Logger);
             using (var serviceScope = host.Services.CreateScope())
             {
                 var services = serviceScope.ServiceProvider;

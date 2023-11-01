@@ -25,13 +25,19 @@ namespace YifyFileDownloader.Services
             _context = context;
             _logger = logger;
             _settings = settings;
-            _client = new HttpClient();
+            _client = new HttpClient(new HttpClientHandler
+            {
+                ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => true,
+                SslProtocols = System.Security.Authentication.SslProtocols.Tls | System.Security.Authentication.SslProtocols.Tls11 | System.Security.Authentication.SslProtocols.Tls12
+            });
         }
 
-        public async Task<ApiMoviesResponse?> GetApiMoviesResponse(int page)
+    public async Task<ApiMoviesResponse?> GetApiMoviesResponse(int page)
+    {
+        try
         {
             _logger.LogInformation("Calling the API for movie information.");
-            
+
             var payloadQueryString = GetQueryString(page);
             _logger.LogInformation($"Payload generated : {payloadQueryString}");
 
@@ -67,24 +73,29 @@ namespace YifyFileDownloader.Services
             var finalResponse = JsonConvert.DeserializeObject<ApiMoviesResponse>(responseData);
             return finalResponse;
         }
-
-        private string GetQueryString(int page)
+        catch
         {
-            List<string> queryStringParams = new List<string>();
-
-            string limitQueryString = $"limit={_settings.Limit}";
-            string pageQueryString = $"page={page}";
-            string qualityQueryString = $"quality={_settings.Qualities}";
-            string minRatingQueryString = $"minimum_rating={_settings.MinimumRating}";
-            string genreQueryString = $"genre={_settings.Genres}";
-
-            queryStringParams.Add(limitQueryString);
-            queryStringParams.Add(pageQueryString);
-            queryStringParams.Add(qualityQueryString);
-            queryStringParams.Add(minRatingQueryString);
-            queryStringParams.Add(genreQueryString);
-
-            return string.Join("&", queryStringParams);
+            throw;
         }
     }
+
+    private string GetQueryString(int page)
+    {
+        List<string> queryStringParams = new List<string>();
+
+        string limitQueryString = $"limit={_settings.Limit}";
+        string pageQueryString = $"page={page}";
+        string qualityQueryString = $"quality={_settings.Qualities}";
+        string minRatingQueryString = $"minimum_rating={_settings.MinimumRating}";
+        string genreQueryString = $"genre={_settings.Genres}";
+
+        queryStringParams.Add(limitQueryString);
+        queryStringParams.Add(pageQueryString);
+        queryStringParams.Add(qualityQueryString);
+        queryStringParams.Add(minRatingQueryString);
+        queryStringParams.Add(genreQueryString);
+
+        return string.Join("&", queryStringParams);
+    }
+}
 }

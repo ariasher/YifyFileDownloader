@@ -50,7 +50,7 @@ namespace YifyFileDownloader.Forms
 
                 try
                 {
-
+                    btnDownload.PerformSafely(() => btnDownload.Enabled = false);
                     infoLabel.PerformSafely(() => infoLabel.Text = "Download is going to start."); 
                     _logger.LogInformation("Download is going to start.");
 
@@ -95,6 +95,7 @@ namespace YifyFileDownloader.Forms
 
                     infoLabel.PerformSafely(() => infoLabel.Text = "Download finished. Data is upto-date.");
                     Dialog.ShowMessage(Utility.TitleSuccess, "Download finished.", Dialog.Type.Information);
+                    btnDownload.PerformSafely(() => btnDownload.Enabled = true);
                 }
                 catch (Exception ex)
                 {
@@ -103,6 +104,7 @@ namespace YifyFileDownloader.Forms
                     infoLabel.PerformSafely(() => infoLabel.Text = ex.Message);
                     instanceLog.UpdatedAt = DateTime.Now;
                     Dialog.ShowMessage(Utility.TitleError, "An error occurred while downloading data. Please try again or check log files.", Dialog.Type.Error);
+                    btnDownload.PerformSafely(() => btnDownload.Enabled = true);
                 }
 
                 try

@@ -20,7 +20,7 @@ namespace YifyFileDownloader.Utilities
         // check whether db file exists
         // if not create db file and generate tables
 
-        public static IHost BuildHost()
+        public static IHost BuildHost(Serilog.ILogger Logger)
         {
             string connectionString = ConfigurationManager
                 .ConnectionStrings[Utility.ConnectionStringName]
@@ -35,21 +35,18 @@ namespace YifyFileDownloader.Utilities
                   });
 
                   var serilogLogger = BuildLogger();
-
+                  Logger = serilogLogger;
                   services.AddLogging(x =>
                   {
                       x.SetMinimumLevel(LogLevel.Information);
                       x.AddSerilog(logger: serilogLogger, dispose: true);
                   });
-
-
-                  //services.AddScoped<>();
               });
 
             return builder.Build();
         }
 
-        private static Serilog.ILogger BuildLogger()
+        private static Serilog.Core.Logger BuildLogger()
         {
             return new LoggerConfiguration()
                 .ReadFrom.AppSettings()
