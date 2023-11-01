@@ -6,6 +6,7 @@ using Serilog;
 using System.Configuration;
 using YifyFileDownloader.Forms;
 using YifyFileDownloader.Persistence;
+using YifyFileDownloader.Services;
 using YifyFileDownloader.Utilities;
 
 namespace YifyFileDownloader
@@ -21,66 +22,26 @@ namespace YifyFileDownloader
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
 
-            var host = BuildHost();
+            var host = Startup.BuildHost();
             using (var serviceScope = host.Services.CreateScope())
             {
                 var services = serviceScope.ServiceProvider;
 
                 try
                 {
-                    var logg = services.GetRequiredService<ILogger<YTS_Downloader>>();
-                    var employeeContext = services.GetRequiredService<YTSDbContext>();
-                    // check for startup actions
+                    var formLogger = services.GetRequiredService<ILogger<YTS_Downloader>>();
+                    var dbContext = services.GetRequiredService<YTSDbContext>();
+                    var apiLogger = services.GetRequiredService<ILogger<ApiService>>();
+                    var apiSettings = Startup.GetApiSettings();
 
                     ApplicationConfiguration.Initialize();
-                    //Application.Run(new Form1());
-
-                    Console.WriteLine("Success");
+                    Application.Run(new YTS_Downloader(dbContext, formLogger, apiLogger, apiSettings));
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine("Error Occured");
+                    Dialog.ShowMessage(Utility.TitleError, "An error occurred while opening the application. Please try again or check log files.", Dialog.Type.Error);
                 }
             }
-
-
-                
-        }
-
-        private static IHost BuildHost()
-        {
-            string connectionString = ConfigurationManager
-                .ConnectionStrings[Utility.ConnectionStringName]
-                .ToString();
-
-            var builder = new HostBuilder()
-              .ConfigureServices((hostContext, services) =>
-              {
-                  services.AddDbContext<YTSDbContext>(options =>
-                  {
-                      options.UseSqlServer(connectionString);
-                  });
-
-                  var serilogLogger = BuildLogger();
-
-                  services.AddLogging(x =>
-                  {
-                      x.SetMinimumLevel(LogLevel.Information);
-                      x.AddSerilog(logger: serilogLogger, dispose: true);
-                  });
-
-
-                  //services.AddScoped<>();
-              });
-
-            return builder.Build();
-        }
-
-        private static Serilog.ILogger BuildLogger()
-        {
-            return new LoggerConfiguration()
-                .ReadFrom.AppSettings()
-                .CreateLogger();
         }
     }
 }
