@@ -29,6 +29,7 @@ namespace YifyFileDownloader
 
                 try
                 {
+                    Log.Logger.Information("TEST");
                     var formLogger = services.GetRequiredService<ILogger<YTS_Downloader>>();
                     var dbContext = services.GetRequiredService<YTSDbContext>();
                     var apiLogger = services.GetRequiredService<ILogger<ApiService>>();

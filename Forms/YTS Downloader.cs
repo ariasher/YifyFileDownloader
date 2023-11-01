@@ -41,7 +41,7 @@ namespace YifyFileDownloader.Forms
             {
                 var now = DateTime.Now;
 
-                InstanceLog instanceLog = new InstanceLog
+                InstanceLogs instanceLog = new InstanceLogs
                 {
                     CreatedAt = now,
                     UpdatedAt = now,
@@ -72,7 +72,7 @@ namespace YifyFileDownloader.Forms
                     while (!reachedLastRead)
                     {
                         _logger.LogInformation("API loop started.");
-                        infoLabel.PerformSafely(() => infoLabel.Text = "Started calling API.");
+                        infoLabel.PerformSafely(() => infoLabel.Text = $"Started calling API. Page {page}.");
 
                         var apiResponse = await _apiService.GetApiMoviesResponse(page);
                         _logger.LogInformation($"API response received for page {page}.");
@@ -85,10 +85,11 @@ namespace YifyFileDownloader.Forms
                         _context.SaveChanges();
                         _logger.LogInformation($"Saved details to the DB.");
 
-                        // Wait for 5 seconds to refetch data of the next page
+                        // Wait for 10 seconds to refetch data of the next page
                         ++page;
-                        _logger.LogInformation($"Going to sleep for 5 seconds.");
-                        Thread.Sleep(5000);
+                        _logger.LogInformation($"Going to sleep for 10 seconds.");
+                        infoLabel.PerformSafely(() => infoLabel.Text = "Going to sleep for 10 seconds.");
+                        Thread.Sleep(10000);
                     }
 
                     _logger.LogInformation("Download finished. Data is upto-date.");
@@ -121,7 +122,7 @@ namespace YifyFileDownloader.Forms
             });
         }
 
-        private async Task SaveInstanceLog(InstanceLog log)
+        private async Task SaveInstanceLog(InstanceLogs log)
         {
             await _context.AddAsync(log);
             _context.SaveChanges();

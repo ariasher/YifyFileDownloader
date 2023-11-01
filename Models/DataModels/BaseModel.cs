@@ -12,9 +12,8 @@ public abstract class BaseModel
     public long Id { get; set; }
 
     [Required]
-    [DefaultValue(true)]
     [Column("IS_ACTIVE")]
-    public bool IsActive { get; set; }
+    public bool? IsActive { get; set; }
 
     [Column("DELETED_AT")]
     public DateTime? DeletedAt { get; set; }

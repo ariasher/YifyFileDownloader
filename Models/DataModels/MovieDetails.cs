@@ -52,10 +52,10 @@ public class MovieDetails : BaseModel
     [Column("MOVIE_LENGTH")]
     public int Runtime { get; set; }
 
-    [Required]
+    //[Required]
     [Column("GENRES")]
     [StringLength(100)]
-    public string Genres { get; set; }
+    public string? Genres { get; set; }
 
     [Required]
     [Column("MOVIE_LANGUAGE")]

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace YifyFileDownloader.Migrations
 {
     /// <inheritdoc />
-    public partial class YifyFileDownloaderPersistenceYTSDbContext : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -21,7 +21,7 @@ namespace YifyFileDownloader.Migrations
                     API_ENDPOINT = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     API_PAYLOAD = table.Column<string>(type: "nvarchar(400)", maxLength: 400, nullable: false),
                     API_RESPONSE = table.Column<string>(type: "VARCHAR(MAX)", nullable: false),
-                    IS_ACTIVE = table.Column<bool>(type: "bit", nullable: false),
+                    IS_ACTIVE = table.Column<bool>(type: "bit", nullable: false, defaultValue: true),
                     DELETED_AT = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CREATED_AT = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UPDATED_AT = table.Column<DateTime>(type: "datetime2", nullable: false)
@@ -32,7 +32,24 @@ namespace YifyFileDownloader.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "MovieDetails",
+                name: "INSTANCE_LOGS",
+                columns: table => new
+                {
+                    ID = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    RAN_SUCCESSFULLY = table.Column<bool>(type: "bit", nullable: false),
+                    IS_ACTIVE = table.Column<bool>(type: "bit", nullable: false, defaultValue: true),
+                    DELETED_AT = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CREATED_AT = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UPDATED_AT = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_INSTANCE_LOGS", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "MOVIE_DETAILS",
                 columns: table => new
                 {
                     ID = table.Column<long>(type: "bigint", nullable: false)
@@ -48,14 +65,14 @@ namespace YifyFileDownloader.Migrations
                     MOVIE_LENGTH = table.Column<int>(type: "int", nullable: false),
                     GENRES = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     MOVIE_LANGUAGE = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
-                    IS_ACTIVE = table.Column<bool>(type: "bit", nullable: false),
+                    IS_ACTIVE = table.Column<bool>(type: "bit", nullable: false, defaultValue: true),
                     DELETED_AT = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CREATED_AT = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UPDATED_AT = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MovieDetails", x => x.ID);
+                    table.PrimaryKey("PK_MOVIE_DETAILS", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
@@ -69,7 +86,7 @@ namespace YifyFileDownloader.Migrations
                     TORRENT_QUALITY = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     TORRENT_TYPE = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     MOVIE_ID = table.Column<long>(type: "bigint", nullable: false),
-                    IS_ACTIVE = table.Column<bool>(type: "bit", nullable: false),
+                    IS_ACTIVE = table.Column<bool>(type: "bit", nullable: false, defaultValue: true),
                     DELETED_AT = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CREATED_AT = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UPDATED_AT = table.Column<DateTime>(type: "datetime2", nullable: false)
@@ -78,9 +95,9 @@ namespace YifyFileDownloader.Migrations
                 {
                     table.PrimaryKey("PK_TORRENT_DETAILS", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_TORRENT_DETAILS_MovieDetails_MOVIE_ID",
+                        name: "FK_TORRENT_DETAILS_MOVIE_DETAILS_MOVIE_ID",
                         column: x => x.MOVIE_ID,
-                        principalTable: "MovieDetails",
+                        principalTable: "MOVIE_DETAILS",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -98,10 +115,13 @@ namespace YifyFileDownloader.Migrations
                 name: "API");
 
             migrationBuilder.DropTable(
+                name: "INSTANCE_LOGS");
+
+            migrationBuilder.DropTable(
                 name: "TORRENT_DETAILS");
 
             migrationBuilder.DropTable(
-                name: "MovieDetails");
+                name: "MOVIE_DETAILS");
         }
     }
 }

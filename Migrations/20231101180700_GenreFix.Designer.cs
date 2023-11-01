@@ -12,8 +12,8 @@ using YifyFileDownloader.Persistence;
 namespace YifyFileDownloader.Migrations
 {
     [DbContext(typeof(YTSDbContext))]
-    [Migration("20231101121118_changeTableName")]
-    partial class changeTableName
+    [Migration("20231101180700_GenreFix")]
+    partial class GenreFix
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -48,8 +48,11 @@ namespace YifyFileDownloader.Migrations
                         .HasColumnType("nvarchar(200)")
                         .HasColumnName("API_ENDPOINT");
 
-                    b.Property<bool>("IsActive")
+                    b.Property<bool?>("IsActive")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
+                        .HasDefaultValue(true)
                         .HasColumnName("IS_ACTIVE");
 
                     b.Property<string>("Name")
@@ -78,6 +81,43 @@ namespace YifyFileDownloader.Migrations
                     b.ToTable("API");
                 });
 
+            modelBuilder.Entity("YifyFileDownloader.Models.DataModels.InstanceLogs", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasColumnName("ID");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("CREATED_AT");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("DELETED_AT");
+
+                    b.Property<bool?>("IsActive")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(true)
+                        .HasColumnName("IS_ACTIVE");
+
+                    b.Property<bool>("IsSuccess")
+                        .HasColumnType("bit")
+                        .HasColumnName("RAN_SUCCESSFULLY");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("UPDATED_AT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("INSTANCE_LOGS");
+                });
+
             modelBuilder.Entity("YifyFileDownloader.Models.DataModels.MovieDetails", b =>
                 {
                     b.Property<long>("Id")
@@ -102,7 +142,6 @@ namespace YifyFileDownloader.Migrations
                         .HasColumnName("MOVIE_ENGLISH_TITLE");
 
                     b.Property<string>("Genres")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)")
                         .HasColumnName("GENRES");
@@ -113,8 +152,11 @@ namespace YifyFileDownloader.Migrations
                         .HasColumnType("nvarchar(50)")
                         .HasColumnName("IMDB_CODE");
 
-                    b.Property<bool>("IsActive")
+                    b.Property<bool?>("IsActive")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
+                        .HasDefaultValue(true)
                         .HasColumnName("IS_ACTIVE");
 
                     b.Property<string>("Language")
@@ -189,8 +231,11 @@ namespace YifyFileDownloader.Migrations
                         .HasColumnType("nvarchar(100)")
                         .HasColumnName("TORRENT_HASH");
 
-                    b.Property<bool>("IsActive")
+                    b.Property<bool?>("IsActive")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
+                        .HasDefaultValue(true)
                         .HasColumnName("IS_ACTIVE");
 
                     b.Property<long>("MovieId")

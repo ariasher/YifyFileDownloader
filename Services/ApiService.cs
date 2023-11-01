@@ -85,15 +85,15 @@ namespace YifyFileDownloader.Services
 
         string limitQueryString = $"limit={_settings.Limit}";
         string pageQueryString = $"page={page}";
-        string qualityQueryString = $"quality={_settings.Qualities}";
+        //string qualityQueryString = $"quality={_settings.Qualities}";
         string minRatingQueryString = $"minimum_rating={_settings.MinimumRating}";
-        string genreQueryString = $"genre={_settings.Genres}";
+        //string genreQueryString = $"genre={_settings.Genres}";
 
         queryStringParams.Add(limitQueryString);
         queryStringParams.Add(pageQueryString);
-        queryStringParams.Add(qualityQueryString);
+        //queryStringParams.Add(qualityQueryString);
         queryStringParams.Add(minRatingQueryString);
-        queryStringParams.Add(genreQueryString);
+        //queryStringParams.Add(genreQueryString);
 
         return string.Join("&", queryStringParams);
     }

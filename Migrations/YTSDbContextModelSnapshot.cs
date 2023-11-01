@@ -45,8 +45,11 @@ namespace YifyFileDownloader.Migrations
                         .HasColumnType("nvarchar(200)")
                         .HasColumnName("API_ENDPOINT");
 
-                    b.Property<bool>("IsActive")
+                    b.Property<bool?>("IsActive")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
+                        .HasDefaultValue(true)
                         .HasColumnName("IS_ACTIVE");
 
                     b.Property<string>("Name")
@@ -75,7 +78,7 @@ namespace YifyFileDownloader.Migrations
                     b.ToTable("API");
                 });
 
-            modelBuilder.Entity("YifyFileDownloader.Models.DataModels.InstanceLog", b =>
+            modelBuilder.Entity("YifyFileDownloader.Models.DataModels.InstanceLogs", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -92,8 +95,11 @@ namespace YifyFileDownloader.Migrations
                         .HasColumnType("datetime2")
                         .HasColumnName("DELETED_AT");
 
-                    b.Property<bool>("IsActive")
+                    b.Property<bool?>("IsActive")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
+                        .HasDefaultValue(true)
                         .HasColumnName("IS_ACTIVE");
 
                     b.Property<bool>("IsSuccess")
@@ -106,7 +112,7 @@ namespace YifyFileDownloader.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("INSTANCE_LOG");
+                    b.ToTable("INSTANCE_LOGS");
                 });
 
             modelBuilder.Entity("YifyFileDownloader.Models.DataModels.MovieDetails", b =>
@@ -133,7 +139,6 @@ namespace YifyFileDownloader.Migrations
                         .HasColumnName("MOVIE_ENGLISH_TITLE");
 
                     b.Property<string>("Genres")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)")
                         .HasColumnName("GENRES");
@@ -144,8 +149,11 @@ namespace YifyFileDownloader.Migrations
                         .HasColumnType("nvarchar(50)")
                         .HasColumnName("IMDB_CODE");
 
-                    b.Property<bool>("IsActive")
+                    b.Property<bool?>("IsActive")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
+                        .HasDefaultValue(true)
                         .HasColumnName("IS_ACTIVE");
 
                     b.Property<string>("Language")
@@ -220,8 +228,11 @@ namespace YifyFileDownloader.Migrations
                         .HasColumnType("nvarchar(100)")
                         .HasColumnName("TORRENT_HASH");
 
-                    b.Property<bool>("IsActive")
+                    b.Property<bool?>("IsActive")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
+                        .HasDefaultValue(true)
                         .HasColumnName("IS_ACTIVE");
 
                     b.Property<long>("MovieId")

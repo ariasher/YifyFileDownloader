@@ -15,11 +15,16 @@ public class YTSDbContext : DbContext
             .WithOne(t => t.MovieDetails)
             .HasForeignKey(t => t.MovieId)
             .HasPrincipalKey(m => m.Id);
+
+        modelBuilder.Entity<API>().Property(b => b.IsActive).HasDefaultValue(true);
+        modelBuilder.Entity<MovieDetails>().Property(b => b.IsActive).HasDefaultValue(true);
+        modelBuilder.Entity<TorrentDetails>().Property(b => b.IsActive).HasDefaultValue(true);
+        modelBuilder.Entity<InstanceLogs>().Property(b => b.IsActive).HasDefaultValue(true);
     }
 
 
     public DbSet<API> APIs { get; set; }
     public DbSet<MovieDetails> MovieDetails { get; set; }
     public DbSet<TorrentDetails> TorrentDetails { get; set; }
-    public DbSet<InstanceLog> InstanceLogs { get; set; }
+    public DbSet<InstanceLogs> InstanceLogs { get; set; }
 }

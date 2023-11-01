@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 
 namespace YifyFileDownloader.Models.DataModels
 {
-    [Table("INSTANCE_LOG")]
-    public class InstanceLog : BaseModel
+    [Table("INSTANCE_LOGS")]
+    public class InstanceLogs : BaseModel
     {
         [Required]
         [Column("RAN_SUCCESSFULLY")]
