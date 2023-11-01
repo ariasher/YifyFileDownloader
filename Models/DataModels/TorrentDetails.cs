@@ -26,6 +26,10 @@ public class TorrentDetails : BaseModel
     [Column("TORRENT_TYPE")]
     public string Type { get; set; }
 
+    [Required]
+    [Column("MOVIE_ID")]
+    public int MovieId { get; set; }
+
     [NotMapped]
     public MovieDetails MovieDetails { get; set; }
 }
