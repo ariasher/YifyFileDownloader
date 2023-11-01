@@ -28,12 +28,45 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Text = "YTS_Downloader";
+            infoLabel = new Label();
+            btnDownload = new Button();
+            SuspendLayout();
+            // 
+            // infoLabel
+            // 
+            infoLabel.AutoSize = true;
+            infoLabel.Location = new Point(39, 239);
+            infoLabel.Name = "infoLabel";
+            infoLabel.Size = new Size(42, 20);
+            infoLabel.TabIndex = 0;
+            infoLabel.Text = "INFO";
+            // 
+            // btnDownload
+            // 
+            btnDownload.Location = new Point(288, 95);
+            btnDownload.Name = "btnDownload";
+            btnDownload.Size = new Size(177, 56);
+            btnDownload.TabIndex = 1;
+            btnDownload.Text = "Start Downloading";
+            btnDownload.UseVisualStyleBackColor = true;
+            btnDownload.Click += btnDownload_Click;
+            // 
+            // YTS_Downloader
+            // 
+            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(800, 450);
+            Controls.Add(btnDownload);
+            Controls.Add(infoLabel);
+            Name = "YTS_Downloader";
+            Text = "YTS_Downloader";
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
+
+        private Label infoLabel;
+        private Button btnDownload;
     }
 }

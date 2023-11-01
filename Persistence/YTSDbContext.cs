@@ -21,4 +21,5 @@ public class YTSDbContext : DbContext
     public DbSet<API> APIs { get; set; }
     public DbSet<MovieDetails> MovieDetails { get; set; }
     public DbSet<TorrentDetails> TorrentDetails { get; set; }
+    public DbSet<InstanceLog> InstanceLogs { get; set; }
 }
