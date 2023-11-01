@@ -12,13 +12,13 @@ public class ApiSettings
     // Addition default values
     private const int DEFAULT_MIN_YEAR = 1980;
     private const string DEFAULT_QUALITY = $"{nameof(MovieQuality.FHD1080p)},{nameof(MovieQuality.HD720p)}";
-    private const double DEFAULT_MIN_RATING = 5;
+    private const int DEFAULT_MIN_RATING = 5;
     
     // Properties
     public int MinimumYear { get; set; }
     public int Limit { get; set; }
     public string Qualities { get; set; }
-    public double MinimumRating { get; set; }
+    public int MinimumRating { get; set; }
     public string Genres { get; set; }
     public string Endpoint { get; set; }
 
