@@ -2,7 +2,6 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using YifyFileDownloader.Persistence;
 
@@ -16,64 +15,64 @@ namespace YifyFileDownloader.Migrations
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.13")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128);
-
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+            modelBuilder.HasAnnotation("ProductVersion", "7.0.13");
 
             modelBuilder.Entity("YifyFileDownloader.Models.DataModels.API", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("ID");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2")
+                        .HasColumnType("TEXT")
                         .HasColumnName("CREATED_AT");
 
                     b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("datetime2")
+                        .HasColumnType("TEXT")
                         .HasColumnName("DELETED_AT");
 
                     b.Property<string>("Endpoint")
                         .IsRequired()
                         .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)")
+                        .HasColumnType("TEXT")
                         .HasColumnName("API_ENDPOINT");
 
                     b.Property<bool?>("IsActive")
                         .IsRequired()
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
+                        .HasColumnType("INTEGER")
                         .HasDefaultValue(true)
                         .HasColumnName("IS_ACTIVE");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
+                        .HasColumnType("TEXT")
                         .HasColumnName("API_NAME");
 
                     b.Property<string>("Payload")
                         .IsRequired()
                         .HasMaxLength(400)
-                        .HasColumnType("nvarchar(400)")
+                        .HasColumnType("TEXT")
                         .HasColumnName("API_PAYLOAD");
 
                     b.Property<string>("Response")
                         .IsRequired()
-                        .HasColumnType("VARCHAR(MAX)")
+                        .HasColumnType("blob")
                         .HasColumnName("API_RESPONSE");
 
                     b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime2")
+                        .HasColumnType("TEXT")
                         .HasColumnName("UPDATED_AT");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CreatedAt");
+
+                    b.HasIndex("DeletedAt");
+
+                    b.HasIndex("IsActive");
 
                     b.ToTable("API");
                 });
@@ -82,35 +81,41 @@ namespace YifyFileDownloader.Migrations
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("ID");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2")
+                        .HasColumnType("TEXT")
                         .HasColumnName("CREATED_AT");
 
                     b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("datetime2")
+                        .HasColumnType("TEXT")
                         .HasColumnName("DELETED_AT");
 
                     b.Property<bool?>("IsActive")
                         .IsRequired()
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
+                        .HasColumnType("INTEGER")
                         .HasDefaultValue(true)
                         .HasColumnName("IS_ACTIVE");
 
                     b.Property<bool>("IsSuccess")
-                        .HasColumnType("bit")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("RAN_SUCCESSFULLY");
 
                     b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime2")
+                        .HasColumnType("TEXT")
                         .HasColumnName("UPDATED_AT");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CreatedAt");
+
+                    b.HasIndex("DeletedAt");
+
+                    b.HasIndex("IsActive");
+
+                    b.HasIndex("IsSuccess");
 
                     b.ToTable("INSTANCE_LOGS");
                 });
@@ -119,88 +124,108 @@ namespace YifyFileDownloader.Migrations
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("ID");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2")
+                        .HasColumnType("TEXT")
                         .HasColumnName("CREATED_AT");
 
                     b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("datetime2")
+                        .HasColumnType("TEXT")
                         .HasColumnName("DELETED_AT");
 
                     b.Property<string>("EnglishTitle")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
+                        .HasColumnType("TEXT")
                         .HasColumnName("MOVIE_ENGLISH_TITLE");
 
                     b.Property<string>("Genres")
                         .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
+                        .HasColumnType("TEXT")
                         .HasColumnName("GENRES");
 
                     b.Property<string>("ImdbCode")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)")
+                        .HasColumnType("TEXT")
                         .HasColumnName("IMDB_CODE");
 
                     b.Property<bool?>("IsActive")
                         .IsRequired()
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
+                        .HasColumnType("INTEGER")
                         .HasDefaultValue(true)
                         .HasColumnName("IS_ACTIVE");
 
                     b.Property<string>("Language")
                         .IsRequired()
                         .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)")
+                        .HasColumnType("TEXT")
                         .HasColumnName("MOVIE_LANGUAGE");
 
                     b.Property<string>("LongTitle")
                         .IsRequired()
                         .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)")
+                        .HasColumnType("TEXT")
                         .HasColumnName("MOVIE_LONG_TITLE");
 
                     b.Property<int>("MId")
-                        .HasColumnType("int")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("MOVIE_ID");
 
                     b.Property<double>("Rating")
-                        .HasColumnType("float")
+                        .HasColumnType("REAL")
                         .HasColumnName("RATING");
 
                     b.Property<int>("Runtime")
-                        .HasColumnType("int")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("MOVIE_LENGTH");
 
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
+                        .HasColumnType("TEXT")
                         .HasColumnName("MOVIE_TITLE");
 
                     b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime2")
+                        .HasColumnType("TEXT")
                         .HasColumnName("UPDATED_AT");
 
                     b.Property<string>("Url")
                         .IsRequired()
                         .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)")
+                        .HasColumnType("TEXT")
                         .HasColumnName("MOVIE_URL");
 
                     b.Property<int>("Year")
-                        .HasColumnType("int")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("RELEASE_YEAR");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CreatedAt");
+
+                    b.HasIndex("DeletedAt");
+
+                    b.HasIndex("EnglishTitle");
+
+                    b.HasIndex("Genres");
+
+                    b.HasIndex("IsActive");
+
+                    b.HasIndex("Language");
+
+                    b.HasIndex("MId");
+
+                    b.HasIndex("Rating");
+
+                    b.HasIndex("Runtime");
+
+                    b.HasIndex("Title");
+
+                    b.HasIndex("Year");
 
                     b.ToTable("MOVIE_DETAILS");
                 });
@@ -209,61 +234,69 @@ namespace YifyFileDownloader.Migrations
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("ID");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2")
+                        .HasColumnType("TEXT")
                         .HasColumnName("CREATED_AT");
 
                     b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("datetime2")
+                        .HasColumnType("TEXT")
                         .HasColumnName("DELETED_AT");
 
                     b.Property<string>("Hash")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
+                        .HasColumnType("TEXT")
                         .HasColumnName("TORRENT_HASH");
 
                     b.Property<bool?>("IsActive")
                         .IsRequired()
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
+                        .HasColumnType("INTEGER")
                         .HasDefaultValue(true)
                         .HasColumnName("IS_ACTIVE");
 
                     b.Property<long>("MovieId")
-                        .HasColumnType("bigint")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("MOVIE_ID");
 
                     b.Property<string>("Quality")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)")
+                        .HasColumnType("TEXT")
                         .HasColumnName("TORRENT_QUALITY");
 
                     b.Property<string>("Type")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)")
+                        .HasColumnType("TEXT")
                         .HasColumnName("TORRENT_TYPE");
 
                     b.Property<string>("URL")
                         .IsRequired()
                         .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)")
+                        .HasColumnType("TEXT")
                         .HasColumnName("TORRENT_URL");
 
                     b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime2")
+                        .HasColumnType("TEXT")
                         .HasColumnName("UPDATED_AT");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CreatedAt");
+
+                    b.HasIndex("DeletedAt");
+
+                    b.HasIndex("IsActive");
+
                     b.HasIndex("MovieId");
+
+                    b.HasIndex("Quality");
+
+                    b.HasIndex("Type");
 
                     b.ToTable("TORRENT_DETAILS");
                 });

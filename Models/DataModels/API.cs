@@ -26,6 +26,6 @@ public class API : BaseModel
     public string Payload { get; set; }
 
     [Required]
-    [Column("API_RESPONSE", TypeName = "VARCHAR(MAX)")]
+    [Column("API_RESPONSE")]
     public string Response { get; set; }
 }

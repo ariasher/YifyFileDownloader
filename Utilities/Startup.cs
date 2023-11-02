@@ -34,7 +34,8 @@ namespace YifyFileDownloader.Utilities
               {
                   services.AddDbContext<YTSDbContext>(options =>
                   {
-                      options.UseSqlServer(connectionString);
+                      options.UseSqlite(connectionString);
+                      //options.UseSqlServer(connectionString);
                   });
 
                   var serilogLogger = BuildLogger();

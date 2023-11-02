@@ -21,6 +21,8 @@ public class YTSDbContext : DbContext
         modelBuilder.Entity<MovieDetails>().Property(b => b.IsActive).HasDefaultValue(true);
         modelBuilder.Entity<TorrentDetails>().Property(b => b.IsActive).HasDefaultValue(true);
         modelBuilder.Entity<InstanceLogs>().Property(b => b.IsActive).HasDefaultValue(true);
+
+        modelBuilder.Entity<API>().Property(b => b.Response).HasColumnType("blob");
     }
 
     public override int SaveChanges()
