@@ -155,7 +155,7 @@ namespace YifyFileDownloader.Forms
                 var movieDetails = new MovieDetails();
                 movieDetails.Title = movie.title;
                 movieDetails.EnglishTitle = movie.title_english;
-                movieDetails.Genres = string.Join(",", movie.genres);
+                movieDetails.Genres = string.Join(",", movie.genres ?? new List<string>());
                 movieDetails.CreatedAt = instanceTime;
                 movieDetails.ImdbCode = movie.imdb_code;
                 movieDetails.Language = movie.language;

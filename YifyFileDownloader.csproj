@@ -10,7 +10,6 @@
 
   <ItemGroup>
     <Folder Include="Migrations\" />
-    <Folder Include="Resources\Config\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -28,6 +27,15 @@
     <PackageReference Include="Serilog.Sinks.Console" Version="4.1.0" />
     <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
     <PackageReference Include="Serilog.Sinks.RollingFile" Version="3.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Resources\Database\yts.mdf">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Database\yts_log.ldf">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
