@@ -30,6 +30,7 @@ namespace YifyFileDownloader.Forms
         private Point lastLocation;
         private int sleepSeconds;
         private int sleepMilliseconds;
+        private int page;
 
         public YTS_Downloader(YTSDbContext context, ILogger<YTS_Downloader> logger, ILogger<ApiService> serviceLogger, ApiSettings apiSettings)
         {
@@ -42,6 +43,7 @@ namespace YifyFileDownloader.Forms
 
             sleepMilliseconds = apiSettings.SleepMilliseconds;
             sleepSeconds = Convert.ToInt32(Math.Ceiling(apiSettings.SleepMilliseconds / 1000f));
+            page = apiSettings.Page;
         }
 
         private void btnDownload_Click(object sender, EventArgs e)
@@ -63,7 +65,6 @@ namespace YifyFileDownloader.Forms
                     AddLineToTheTextbox("Download is going to start.");
                     _logger.LogInformation("Download is going to start.");
 
-                    int page = 1;
                     bool reachedLastRead = false;
 
                     // Fetch when was the last time this program ran successfully.
@@ -103,6 +104,7 @@ namespace YifyFileDownloader.Forms
 
                     _logger.LogInformation("Download finished. Data is upto-date.");
 
+                    page = 1;
                     AddLineToTheTextbox("Download finished. Data is upto-date.");
                     Dialog.ShowMessage(Utility.TitleSuccess, "Download finished.", Dialog.Type.Information);
                     btnDownload.PerformSafely(() => btnDownload.Enabled = true);
@@ -112,6 +114,7 @@ namespace YifyFileDownloader.Forms
                     _logger.LogError($"Error while trying to download data.");
                     _logger.LogError($"Exception : {ex} with message {ex.Message}.");
                     AddLineToTheTextbox(ex.Message);
+                    page = 1;
                     instanceLog.UpdatedAt = DateTime.Now;
                     Dialog.ShowMessage(Utility.TitleError, "An error occurred while downloading data. Please try again or check log files.", Dialog.Type.Error);
                     btnDownload.PerformSafely(() => btnDownload.Enabled = true);
