@@ -17,27 +17,27 @@ public class MovieDetails : BaseModel
 
     [Required]
     [Column("MOVIE_URL")]
-    [StringLength(200)]
+    [MaxLength(200)]
     public string Url { get; set; }
 
     [Required]
     [Column("MOVIE_TITLE")]
-    [StringLength(100)]
+    [MaxLength(100)]
     public string Title { get; set; }
 
     [Required]
     [Column("MOVIE_ENGLISH_TITLE")]
-    [StringLength(100)]
+    [MaxLength(100)]
     public string EnglishTitle { get; set; }
 
     [Required]
     [Column("MOVIE_LONG_TITLE")]
-    [StringLength(200)]
+    [MaxLength(200)]
     public string LongTitle { get; set; }
 
     [Required]
     [Column("IMDB_CODE")]
-    [StringLength(50)]
+    [MaxLength(50)]
     public string ImdbCode { get; set; }
 
     [Required]
@@ -54,12 +54,12 @@ public class MovieDetails : BaseModel
 
     //[Required]
     [Column("GENRES")]
-    [StringLength(100)]
+    [MaxLength(100)]
     public string? Genres { get; set; }
 
     [Required]
     [Column("MOVIE_LANGUAGE")]
-    [StringLength(20)]
+    [MaxLength(20)]
     public string Language { get; set; }
 
     [NotMapped]

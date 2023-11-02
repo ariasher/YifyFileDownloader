@@ -7,17 +7,17 @@ namespace YifyFileDownloader.Models.DataModels;
 public class API : BaseModel
 {
     [Required]
-    [StringLength(100)]
+    [MaxLength(100)]
     [Column("API_NAME")]
     public string Name { get; set; }
 
     [Required]
-    [StringLength(200)]
+    [MaxLength(200)]
     [Column("API_ENDPOINT")]
     public string Endpoint { get; set; }
 
     [Required]
-    [StringLength(400)]
+    [MaxLength(400)]
     [Column("API_PAYLOAD")]
     public string Payload { get; set; }
 

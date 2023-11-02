@@ -7,22 +7,22 @@ namespace YifyFileDownloader.Models.DataModels;
 public class TorrentDetails : BaseModel
 {
     [Required]
-    [StringLength(200)]
+    [MaxLength(200)]
     [Column("TORRENT_URL")]
     public string URL { get; set; }
 
     [Required]
-    [StringLength(100)]
+    [MaxLength(100)]
     [Column("TORRENT_HASH")]
     public string Hash { get; set; }
 
     [Required]
-    [StringLength(50)]
+    [MaxLength(50)]
     [Column("TORRENT_QUALITY")]
     public string Quality { get; set; }
 
     [Required]
-    [StringLength(50)]
+    [MaxLength(50)]
     [Column("TORRENT_TYPE")]
     public string Type { get; set; }
 
