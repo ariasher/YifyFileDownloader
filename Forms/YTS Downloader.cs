@@ -26,10 +26,11 @@ namespace YifyFileDownloader.Forms
         private YTSDbContext _context;
         private ILogger<YTS_Downloader> _logger;
         private ApiService _apiService;
-        
+
         public YTS_Downloader(YTSDbContext context, ILogger<YTS_Downloader> logger, ILogger<ApiService> serviceLogger, ApiSettings apiSettings)
         {
             InitializeComponent();
+            rtbStatus.Text = "Ready to Start.";
             _context = context;
             _logger = logger;
             _apiService = new ApiService(apiSettings, serviceLogger, context);
@@ -51,7 +52,7 @@ namespace YifyFileDownloader.Forms
                 try
                 {
                     btnDownload.PerformSafely(() => btnDownload.Enabled = false);
-                    infoLabel.PerformSafely(() => infoLabel.Text = "Download is going to start."); 
+                    AddLineToTheTextbox("Download is going to start.");
                     _logger.LogInformation("Download is going to start.");
 
                     int page = 1;
@@ -72,7 +73,7 @@ namespace YifyFileDownloader.Forms
                     while (!reachedLastRead)
                     {
                         _logger.LogInformation("API loop started.");
-                        infoLabel.PerformSafely(() => infoLabel.Text = $"Started calling API. Page {page}.");
+                        AddLineToTheTextbox($"Started calling API. Page {page}.");
 
                         var apiResponse = await _apiService.GetApiMoviesResponse(page);
                         _logger.LogInformation($"API response received for page {page}.");
@@ -88,13 +89,13 @@ namespace YifyFileDownloader.Forms
                         // Wait for 10 seconds to refetch data of the next page
                         ++page;
                         _logger.LogInformation($"Going to sleep for 10 seconds.");
-                        infoLabel.PerformSafely(() => infoLabel.Text = "Going to sleep for 10 seconds.");
+                        AddLineToTheTextbox("Going to sleep for 10 seconds.");
                         Thread.Sleep(10000);
                     }
 
                     _logger.LogInformation("Download finished. Data is upto-date.");
 
-                    infoLabel.PerformSafely(() => infoLabel.Text = "Download finished. Data is upto-date.");
+                    AddLineToTheTextbox("Download finished. Data is upto-date.");
                     Dialog.ShowMessage(Utility.TitleSuccess, "Download finished.", Dialog.Type.Information);
                     btnDownload.PerformSafely(() => btnDownload.Enabled = true);
                 }
@@ -102,7 +103,7 @@ namespace YifyFileDownloader.Forms
                 {
                     _logger.LogError($"Error while trying to download data.");
                     _logger.LogError($"Exception : {ex} with message {ex.Message}.");
-                    infoLabel.PerformSafely(() => infoLabel.Text = ex.Message);
+                    AddLineToTheTextbox(ex.Message);
                     instanceLog.UpdatedAt = DateTime.Now;
                     Dialog.ShowMessage(Utility.TitleError, "An error occurred while downloading data. Please try again or check log files.", Dialog.Type.Error);
                     btnDownload.PerformSafely(() => btnDownload.Enabled = true);
@@ -122,13 +123,18 @@ namespace YifyFileDownloader.Forms
             });
         }
 
+        private void AddLineToTheTextbox(string line)
+        {
+            rtbStatus.PerformSafely(() => rtbStatus.Text += $"{Environment.NewLine}{line}");
+        }
+
         private async Task SaveInstanceLog(InstanceLogs log)
         {
             await _context.AddAsync(log);
             _context.SaveChanges();
         }
 
-        private (bool HasLastMovieId, List<MovieDetails> Movies) 
+        private (bool HasLastMovieId, List<MovieDetails> Movies)
             MapApiData(ApiMoviesResponse moviesResponse, int lastMovieId, DateTime instanceTime)
         {
             if (moviesResponse.data == null || moviesResponse.data.movie_count == 0)
@@ -183,11 +189,11 @@ namespace YifyFileDownloader.Forms
 
                     movieDetails.Torrents.Add(torrentDetails);
                 }
-                
+
                 movies.Add(movieDetails);
             }
 
-            return (hasLastMovieId, movies); 
+            return (hasLastMovieId, movies);
         }
 
         /// <summary>
@@ -199,10 +205,24 @@ namespace YifyFileDownloader.Forms
         /// <returns>true if invoke required</returns>
         public bool ControlInvokeRequired(Control c, Action a)
         {
-            if (c.InvokeRequired) c.Invoke(new MethodInvoker(delegate() { a(); }));
+            if (c.InvokeRequired) c.Invoke(new MethodInvoker(delegate () { a(); }));
             else return false;
 
             return true;
+        }
+
+        private void btnMinimize_Click(object sender, EventArgs e)
+        {
+            this.WindowState = FormWindowState.Minimized;
+        }
+
+        private void btnClose_Click(object sender, EventArgs e)
+        {
+            var confirmation = MessageBox.Show("Do you really want to exit?", "Close", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (confirmation == DialogResult.Yes)
+            {
+                Application.Exit();
+            }
         }
     }
 }

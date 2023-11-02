@@ -28,45 +28,100 @@
         /// </summary>
         private void InitializeComponent()
         {
-            infoLabel = new Label();
             btnDownload = new Button();
+            pnlMenuStrip = new Panel();
+            btnClose = new Button();
+            btnMinimize = new Button();
+            rtbStatus = new RichTextBox();
+            pnlMenuStrip.SuspendLayout();
             SuspendLayout();
-            // 
-            // infoLabel
-            // 
-            infoLabel.AutoSize = true;
-            infoLabel.Location = new Point(39, 239);
-            infoLabel.Name = "infoLabel";
-            infoLabel.Size = new Size(42, 20);
-            infoLabel.TabIndex = 0;
-            infoLabel.Text = "INFO";
             // 
             // btnDownload
             // 
-            btnDownload.Location = new Point(288, 95);
+            btnDownload.BackColor = Color.White;
+            btnDownload.FlatAppearance.BorderColor = Color.White;
+            btnDownload.FlatAppearance.MouseDownBackColor = Color.Silver;
+            btnDownload.FlatAppearance.MouseOverBackColor = Color.FromArgb(224, 224, 224);
+            btnDownload.FlatStyle = FlatStyle.Flat;
+            btnDownload.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            btnDownload.Location = new Point(325, 100);
             btnDownload.Name = "btnDownload";
-            btnDownload.Size = new Size(177, 56);
+            btnDownload.Size = new Size(150, 60);
             btnDownload.TabIndex = 1;
-            btnDownload.Text = "Start Downloading";
-            btnDownload.UseVisualStyleBackColor = true;
+            btnDownload.Text = "Download";
+            btnDownload.UseVisualStyleBackColor = false;
             btnDownload.Click += btnDownload_Click;
+            // 
+            // pnlMenuStrip
+            // 
+            pnlMenuStrip.BackColor = Color.White;
+            pnlMenuStrip.Controls.Add(btnClose);
+            pnlMenuStrip.Controls.Add(btnMinimize);
+            pnlMenuStrip.Location = new Point(0, 0);
+            pnlMenuStrip.Name = "pnlMenuStrip";
+            pnlMenuStrip.Size = new Size(800, 40);
+            pnlMenuStrip.TabIndex = 4;
+            // 
+            // btnClose
+            // 
+            btnClose.BackColor = Color.White;
+            btnClose.FlatAppearance.BorderSize = 0;
+            btnClose.FlatStyle = FlatStyle.Flat;
+            btnClose.Image = Properties.Resources.CloseIcon;
+            btnClose.Location = new Point(740, 0);
+            btnClose.Name = "btnClose";
+            btnClose.Size = new Size(40, 40);
+            btnClose.TabIndex = 1;
+            btnClose.UseVisualStyleBackColor = false;
+            btnClose.Click += btnClose_Click;
+            // 
+            // btnMinimize
+            // 
+            btnMinimize.BackColor = Color.White;
+            btnMinimize.FlatAppearance.BorderSize = 0;
+            btnMinimize.FlatStyle = FlatStyle.Flat;
+            btnMinimize.Image = Properties.Resources.MinimizeIcon;
+            btnMinimize.Location = new Point(694, 0);
+            btnMinimize.Name = "btnMinimize";
+            btnMinimize.Size = new Size(40, 40);
+            btnMinimize.TabIndex = 0;
+            btnMinimize.Text = "__";
+            btnMinimize.UseVisualStyleBackColor = false;
+            btnMinimize.Click += btnMinimize_Click;
+            // 
+            // rtbStatus
+            // 
+            rtbStatus.Location = new Point(20, 220);
+            rtbStatus.Name = "rtbStatus";
+            rtbStatus.Size = new Size(760, 260);
+            rtbStatus.TabIndex = 5;
+            rtbStatus.Text = "";
             // 
             // YTS_Downloader
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            BackColor = Color.FromArgb(30, 12, 48);
+            ClientSize = new Size(800, 500);
+            Controls.Add(rtbStatus);
+            Controls.Add(pnlMenuStrip);
             Controls.Add(btnDownload);
-            Controls.Add(infoLabel);
+            FormBorderStyle = FormBorderStyle.None;
+            Location = new Point(0, 30);
+            MaximizeBox = false;
             Name = "YTS_Downloader";
+            SizeGripStyle = SizeGripStyle.Hide;
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "YTS_Downloader";
+            pnlMenuStrip.ResumeLayout(false);
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
-
-        private Label infoLabel;
         private Button btnDownload;
+        private Panel pnlMenuStrip;
+        private RichTextBox rtbStatus;
+        private Button btnClose;
+        private Button btnMinimize;
     }
 }
