@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using YifyFileDownloader.Extensions;
 using YifyFileDownloader.Models.DataModels;
 
 namespace YifyFileDownloader.Persistence;
@@ -22,6 +23,29 @@ public class YTSDbContext : DbContext
         modelBuilder.Entity<InstanceLogs>().Property(b => b.IsActive).HasDefaultValue(true);
     }
 
+    public override int SaveChanges()
+    {
+        this.AutoTruncateStringToMaxLength();
+        return base.SaveChanges();
+    }
+
+    public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
+    {
+        this.AutoTruncateStringToMaxLength();
+        return base.SaveChangesAsync(cancellationToken);
+    }
+
+    public override int SaveChanges(bool acceptAllChangesOnSuccess)
+    {
+        this.AutoTruncateStringToMaxLength();
+        return base.SaveChanges(acceptAllChangesOnSuccess);
+    }
+
+    public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = new CancellationToken())
+    {
+        this.AutoTruncateStringToMaxLength();
+        return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
+    }
 
     public DbSet<API> APIs { get; set; }
     public DbSet<MovieDetails> MovieDetails { get; set; }
