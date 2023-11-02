@@ -13,6 +13,7 @@ public class ApiSettings
     private const int DEFAULT_MIN_YEAR = 1980;
     private const string DEFAULT_QUALITY = $"{nameof(MovieQuality.FHD1080p)},{nameof(MovieQuality.HD720p)}";
     private const int DEFAULT_MIN_RATING = 5;
+    private const int DEFAULT_SLEEP_MILLISECONDS = 5000;
     
     // Properties
     public int MinimumYear { get; set; }
@@ -21,6 +22,7 @@ public class ApiSettings
     public int MinimumRating { get; set; }
     public string Genres { get; set; }
     public string Endpoint { get; set; }
+    public int SleepMilliseconds { get; set; }
 
     public ApiSettings(NameValueCollection AppSettings)
     {
@@ -30,6 +32,7 @@ public class ApiSettings
         var minRating = AppSettings[nameof(MinimumRating)];
         var genres = AppSettings[nameof(Genres)];
         var endpoint = AppSettings[nameof(Endpoint)];
+        var sleepMilliseconds = AppSettings[nameof(SleepMilliseconds)];
 
         MinimumYear = string.IsNullOrWhiteSpace(minYear) ? DEFAULT_MIN_YEAR : Convert.ToInt32(minYear);
         Limit = string.IsNullOrWhiteSpace(limit) ? DEFAULT_LIMIT : Convert.ToInt32(limit);
@@ -37,5 +40,6 @@ public class ApiSettings
         Qualities = string.IsNullOrWhiteSpace(qualities) ? DEFAULT_QUALITY : qualities;
         Genres = string.IsNullOrWhiteSpace(genres) ? DEFAULT_GENRE : genres;
         Endpoint = endpoint ?? string.Empty;
+        SleepMilliseconds = string.IsNullOrWhiteSpace(sleepMilliseconds) ? DEFAULT_SLEEP_MILLISECONDS : Convert.ToInt32(sleepMilliseconds);
     }
 }

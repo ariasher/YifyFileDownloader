@@ -28,7 +28,7 @@ namespace YifyFileDownloader.Forms
         private ApiService _apiService;
         private bool mouseDown;
         private Point lastLocation;
-
+        private int sleepSeconds;
 
         public YTS_Downloader(YTSDbContext context, ILogger<YTS_Downloader> logger, ILogger<ApiService> serviceLogger, ApiSettings apiSettings)
         {
@@ -38,6 +38,8 @@ namespace YifyFileDownloader.Forms
             _context = context;
             _logger = logger;
             _apiService = new ApiService(apiSettings, serviceLogger, context);
+
+            sleepSeconds = Convert.ToInt32(Math.Ceiling(apiSettings.SleepMilliseconds / 1000f));
         }
 
         private void btnDownload_Click(object sender, EventArgs e)
@@ -92,9 +94,9 @@ namespace YifyFileDownloader.Forms
 
                         // Wait for 10 seconds to refetch data of the next page
                         ++page;
-                        _logger.LogInformation($"Going to sleep for 10 seconds.");
-                        AddLineToTheTextbox("Going to sleep for 10 seconds.");
-                        Thread.Sleep(10000);
+                        _logger.LogInformation($"Going to sleep for {sleepSeconds} seconds.");
+                        AddLineToTheTextbox($"Going to sleep for {sleepSeconds} seconds.");
+                        Thread.Sleep(sleepSeconds);
                     }
 
                     _logger.LogInformation("Download finished. Data is upto-date.");
