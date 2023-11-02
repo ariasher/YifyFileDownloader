@@ -113,6 +113,9 @@
             SizeGripStyle = SizeGripStyle.Hide;
             StartPosition = FormStartPosition.CenterScreen;
             Text = "YTS_Downloader";
+            MouseDown += YTS_Downloader_MouseDown;
+            MouseMove += YTS_Downloader_MouseMove;
+            MouseUp += YTS_Downloader_MouseUp;
             pnlMenuStrip.ResumeLayout(false);
             ResumeLayout(false);
         }

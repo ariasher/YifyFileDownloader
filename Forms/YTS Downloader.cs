@@ -26,6 +26,9 @@ namespace YifyFileDownloader.Forms
         private YTSDbContext _context;
         private ILogger<YTS_Downloader> _logger;
         private ApiService _apiService;
+        private bool mouseDown;
+        private Point lastLocation;
+
 
         public YTS_Downloader(YTSDbContext context, ILogger<YTS_Downloader> logger, ILogger<ApiService> serviceLogger, ApiSettings apiSettings)
         {
@@ -221,8 +224,30 @@ namespace YifyFileDownloader.Forms
             var confirmation = MessageBox.Show("Do you really want to exit?", "Close", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (confirmation == DialogResult.Yes)
             {
-                Application.Exit();
+                this.Close();
             }
+        }
+
+        private void YTS_Downloader_MouseDown(object sender, MouseEventArgs e)
+        {
+            mouseDown = true;
+            lastLocation = e.Location;
+        }
+
+        private void YTS_Downloader_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (mouseDown)
+            {
+                this.Location = new Point(
+                    (this.Location.X - lastLocation.X) + e.X, (this.Location.Y - lastLocation.Y) + e.Y);
+
+                this.Update();
+            }
+        }
+
+        private void YTS_Downloader_MouseUp(object sender, MouseEventArgs e)
+        {
+            mouseDown = false;
         }
     }
 }
