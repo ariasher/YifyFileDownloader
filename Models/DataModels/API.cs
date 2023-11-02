@@ -1,8 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace YifyFileDownloader.Models.DataModels;
 
+[Index(nameof(IsActive))]
+[Index(nameof(DeletedAt))]
+[Index(nameof(CreatedAt))]
 [Table("API")]
 public class API : BaseModel
 {

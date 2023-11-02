@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -8,6 +9,17 @@ using System.Threading.Tasks;
 
 namespace YifyFileDownloader.Models.DataModels;
 
+[Index(nameof(IsActive))]
+[Index(nameof(DeletedAt))]
+[Index(nameof(CreatedAt))]
+[Index(nameof(Language))]
+[Index(nameof(Genres))]
+[Index(nameof(Runtime))]
+[Index(nameof(Rating))]
+[Index(nameof(Year))]
+[Index(nameof(Title))]
+[Index(nameof(EnglishTitle))]
+[Index(nameof(MId))]
 [Table("MOVIE_DETAILS")]
 public class MovieDetails : BaseModel
 {

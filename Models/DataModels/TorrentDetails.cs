@@ -1,8 +1,15 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace YifyFileDownloader.Models.DataModels;
 
+[Index(nameof(IsActive))]
+[Index(nameof(DeletedAt))]
+[Index(nameof(CreatedAt))]
+[Index(nameof(Quality))]
+[Index(nameof(Type))]
+[Index(nameof(MovieId))]
 [Table("TORRENT_DETAILS")]
 public class TorrentDetails : BaseModel
 {
