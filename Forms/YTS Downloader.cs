@@ -133,7 +133,17 @@ namespace YifyFileDownloader.Forms
 
         private void AddLineToTheTextbox(string line)
         {
-            rtbStatus.PerformSafely(() => rtbStatus.Text += $"{Environment.NewLine}{line}");
+            rtbStatus.PerformSafely(() => {
+                string message = $"{line}{Environment.NewLine}{rtbStatus.Text}";
+
+                if (message.Length > rtbStatus.MaxLength)
+                {
+                    message = $"Maximum length reached for textbox. Clearing it.";
+                    message = $"{line}{Environment.NewLine}{message}";
+                }
+
+                rtbStatus.Text = message;
+            });
         }
 
         private async Task SaveInstanceLog(InstanceLogs log)
