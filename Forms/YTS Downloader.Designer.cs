@@ -30,6 +30,7 @@
         {
             btnDownload = new Button();
             pnlMenuStrip = new Panel();
+            lblTitle = new Label();
             btnClose = new Button();
             btnMinimize = new Button();
             rtbStatus = new RichTextBox();
@@ -44,6 +45,7 @@
             btnDownload.FlatAppearance.MouseOverBackColor = Color.FromArgb(224, 224, 224);
             btnDownload.FlatStyle = FlatStyle.Flat;
             btnDownload.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            btnDownload.ForeColor = Color.FromArgb(30, 12, 48);
             btnDownload.Location = new Point(325, 100);
             btnDownload.Name = "btnDownload";
             btnDownload.Size = new Size(150, 60);
@@ -55,12 +57,24 @@
             // pnlMenuStrip
             // 
             pnlMenuStrip.BackColor = Color.White;
+            pnlMenuStrip.Controls.Add(lblTitle);
             pnlMenuStrip.Controls.Add(btnClose);
             pnlMenuStrip.Controls.Add(btnMinimize);
             pnlMenuStrip.Location = new Point(0, 0);
             pnlMenuStrip.Name = "pnlMenuStrip";
             pnlMenuStrip.Size = new Size(800, 40);
             pnlMenuStrip.TabIndex = 4;
+            // 
+            // lblTitle
+            // 
+            lblTitle.AutoSize = true;
+            lblTitle.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
+            lblTitle.ForeColor = Color.FromArgb(30, 12, 48);
+            lblTitle.Location = new Point(20, 8);
+            lblTitle.Name = "lblTitle";
+            lblTitle.Size = new Size(42, 23);
+            lblTitle.TabIndex = 2;
+            lblTitle.Text = "Title";
             // 
             // btnClose
             // 
@@ -117,6 +131,7 @@
             MouseMove += YTS_Downloader_MouseMove;
             MouseUp += YTS_Downloader_MouseUp;
             pnlMenuStrip.ResumeLayout(false);
+            pnlMenuStrip.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -126,5 +141,6 @@
         private RichTextBox rtbStatus;
         private Button btnClose;
         private Button btnMinimize;
+        private Label lblTitle;
     }
 }

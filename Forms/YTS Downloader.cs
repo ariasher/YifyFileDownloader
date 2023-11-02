@@ -34,6 +34,7 @@ namespace YifyFileDownloader.Forms
         {
             InitializeComponent();
             rtbStatus.Text = "Ready to Start.";
+            lblTitle.Text = "Yify Movies Downloader";
             _context = context;
             _logger = logger;
             _apiService = new ApiService(apiSettings, serviceLogger, context);
