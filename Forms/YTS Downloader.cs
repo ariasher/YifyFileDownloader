@@ -51,7 +51,6 @@ namespace YifyFileDownloader.Forms
             Task.Run(async () =>
             {
                 var now = DateTime.Now;
-
                 InstanceLogs instanceLog = new InstanceLogs
                 {
                     CreatedAt = now,
@@ -66,6 +65,7 @@ namespace YifyFileDownloader.Forms
                     _logger.LogInformation("Download is going to start.");
 
                     bool reachedLastRead = false;
+                    bool hadMoviesToAdd = false;
 
                     // Fetch when was the last time this program ran successfully.
                     var lastRunDateTime = _context.InstanceLogs
@@ -91,6 +91,9 @@ namespace YifyFileDownloader.Forms
                         _logger.LogInformation($"API response mapped for page {page}.");
                         _logger.LogInformation($"Saving details to the DB.");
 
+                        if (movieDetails.Count > 0 && !hadMoviesToAdd)
+                            hadMoviesToAdd = true;
+
                         await _context.AddRangeAsync(movieDetails);
                         _context.SaveChanges();
                         _logger.LogInformation($"Saved details to the DB.");
@@ -106,6 +109,7 @@ namespace YifyFileDownloader.Forms
                     _logger.LogInformation("Download finished. Data is upto-date.");
 
                     page = 1;
+                    instanceLog.IsSuccess = reachedLastRead && hadMoviesToAdd;
                     AddLineToTheTextbox("Download finished. Data is upto-date.");
                     Dialog.ShowMessage(Utility.TitleSuccess, "Download finished.", Dialog.Type.Information);
                     btnDownload.PerformSafely(() => btnDownload.Enabled = true);
