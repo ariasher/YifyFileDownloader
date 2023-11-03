@@ -97,6 +97,7 @@ namespace YifyFileDownloader.Forms
 
                         // Wait for 10 seconds to refetch data of the next page
                         ++page;
+                        reachedLastRead = reachedLastRead || hasMovieId;
                         _logger.LogInformation($"Going to sleep for {sleepSeconds} seconds.");
                         AddLineToTheTextbox($"Going to sleep for {sleepSeconds} seconds.");
                         Thread.Sleep(sleepMilliseconds);
