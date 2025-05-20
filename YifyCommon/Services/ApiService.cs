@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using YifyCommon.Exceptions;
-using YifyCommon.Models.ApiModels;
+using YifyCommon.Models.YifyApiModels;
 using YifyCommon.Models.DataModels;
 using YifyCommon.Models.HelperModels;
 using YifyCommon.Persistence;

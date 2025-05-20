@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using YifyFileDownloader.Persistence;
+using YifyCommon.Persistence;
 
 #nullable disable
 
-namespace YifyFileDownloader.Migrations
+namespace YifyCommon.Migrations
 {
     [DbContext(typeof(YTSDbContext))]
     [Migration("20231102161733_Initial")]

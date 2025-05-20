@@ -1,4 +1,4 @@
-﻿namespace YifyCommon.Models.ApiModels;
+﻿namespace YifyCommon.Models.YifyApiModels;
 
 public class ApiMoviesResponse : BaseResponse
 {
