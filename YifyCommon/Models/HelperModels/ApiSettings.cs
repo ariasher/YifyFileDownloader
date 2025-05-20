@@ -1,7 +1,7 @@
 ﻿using System.Collections.Specialized;
-using YifyFileDownloader.Models.Constants;
+using YifyCommon.Models.Constants;
 
-namespace YifyFileDownloader.Models.HelperModels;
+namespace YifyCommon.Models.HelperModels;
 
 public class ApiSettings
 {

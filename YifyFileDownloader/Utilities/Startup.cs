@@ -1,19 +1,11 @@
 ﻿using Microsoft.Extensions.Hosting;
 using Serilog;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
 using System.Configuration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using YifyFileDownloader.Persistence;
-using YifyFileDownloader.Models.HelperModels;
+using YifyCommon.Persistence;
+using YifyCommon.Models.HelperModels;
 using Serilog.Events;
-using Serilog.Formatting.Json;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace YifyFileDownloader.Utilities
 {

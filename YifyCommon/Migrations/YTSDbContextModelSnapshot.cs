@@ -3,11 +3,11 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using YifyFileDownloader.Persistence;
+using YifyCommon.Persistence;
 
 #nullable disable
 
-namespace YifyFileDownloader.Migrations
+namespace YifyCommon.Migrations
 {
     [DbContext(typeof(YTSDbContext))]
     partial class YTSDbContextModelSnapshot : ModelSnapshot

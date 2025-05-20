@@ -1,4 +1,4 @@
-﻿namespace YifyFileDownloader.Models.Constants
+﻿namespace YifyCommon.Models.Constants
 {
     public enum MovieGenre
     {

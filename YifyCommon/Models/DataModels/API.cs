@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace YifyFileDownloader.Models.DataModels;
+namespace YifyCommon.Models.DataModels;
 
 [Index(nameof(IsActive))]
 [Index(nameof(DeletedAt))]

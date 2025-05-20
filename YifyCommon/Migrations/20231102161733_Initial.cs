@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace YifyFileDownloader.Migrations
+namespace YifyCommon.Migrations
 {
     /// <inheritdoc />
     public partial class Initial : Migration

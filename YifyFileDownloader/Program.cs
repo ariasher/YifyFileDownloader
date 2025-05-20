@@ -1,12 +1,9 @@
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Serilog;
-using System.Configuration;
 using YifyFileDownloader.Forms;
-using YifyFileDownloader.Persistence;
-using YifyFileDownloader.Services;
+using YifyCommon.Persistence;
+using YifyCommon.Services;
 using YifyFileDownloader.Utilities;
 
 namespace YifyFileDownloader

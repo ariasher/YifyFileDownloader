@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using YifyFileDownloader.Extensions;
-using YifyFileDownloader.Models.DataModels;
+using YifyCommon.Extensions;
+using YifyCommon.Models.DataModels;
 
-namespace YifyFileDownloader.Persistence;
+namespace YifyCommon.Persistence;
 
 public class YTSDbContext : DbContext
 {

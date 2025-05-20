@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace YifyFileDownloader.Models.DataModels;
+namespace YifyCommon.Models.DataModels;
 
 [Index(nameof(IsActive))]
 [Index(nameof(DeletedAt))]
