@@ -1,4 +1,4 @@
-﻿namespace YifyCommon.Models.YifyApiModels
+﻿namespace YifyFileDownloader.Models.YifyApiModels
 {
     public class ApiMovieTorrent
     {

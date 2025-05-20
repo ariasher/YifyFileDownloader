@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System.Configuration;
 using YifyCommon.Persistence;
-using YifyCommon.Models.HelperModels;
+using YifyFileDownloader.Models.HelperModels;
 using Serilog.Events;
 
 namespace YifyFileDownloader.Utilities

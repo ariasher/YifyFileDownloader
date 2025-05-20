@@ -2,11 +2,11 @@
 using Microsoft.Extensions.Logging;
 using System.Data;
 using YifyCommon.Exceptions;
-using YifyCommon.Models.YifyApiModels;
+using YifyFileDownloader.Models.YifyApiModels;
 using YifyCommon.Models.DataModels;
-using YifyCommon.Models.HelperModels;
+using YifyFileDownloader.Models.HelperModels;
 using YifyCommon.Persistence;
-using YifyCommon.Services;
+using YifyFileDownloader.Services;
 using YifyFileDownloader.Utilities;
 
 namespace YifyFileDownloader.Forms

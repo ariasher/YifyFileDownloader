@@ -1,12 +1,12 @@
 ﻿using Microsoft.Extensions.Logging;
 using YifyCommon.Exceptions;
-using YifyCommon.Models.YifyApiModels;
+using YifyFileDownloader.Models.YifyApiModels;
 using YifyCommon.Models.DataModels;
-using YifyCommon.Models.HelperModels;
+using YifyFileDownloader.Models.HelperModels;
 using YifyCommon.Persistence;
 using Newtonsoft.Json;
 
-namespace YifyCommon.Services
+namespace YifyFileDownloader.Services
 {
     public class ApiService
     {

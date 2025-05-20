@@ -3,7 +3,7 @@ using Microsoft.Extensions.Logging;
 using Serilog;
 using YifyFileDownloader.Forms;
 using YifyCommon.Persistence;
-using YifyCommon.Services;
+using YifyFileDownloader.Services;
 using YifyFileDownloader.Utilities;
 
 namespace YifyFileDownloader
