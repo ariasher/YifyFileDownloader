@@ -1,0 +1,6 @@
+@YifyApi_HostAddress = http://localhost:5219
+
+GET {{YifyApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

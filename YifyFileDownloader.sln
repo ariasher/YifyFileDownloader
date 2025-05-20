@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34221.43
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YifyFileDownloader", "YifyFileDownloader.csproj", "{075FF0C6-F997-41D9-A364-B311F6B1A4D3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YifyFileDownloader", "..\Yify\YifyFileDownloader\YifyFileDownloader.csproj", "{075FF0C6-F997-41D9-A364-B311F6B1A4D3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YifyCommon", "..\Yify\YifyCommon\YifyCommon.csproj", "{5B788A4F-A818-466F-A9B8-385A7B30B1E8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YifyApi", "..\Yify\YifyApi\YifyApi.csproj", "{19E8CEE1-9216-414A-83AD-52F7AD184A47}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{075FF0C6-F997-41D9-A364-B311F6B1A4D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{075FF0C6-F997-41D9-A364-B311F6B1A4D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{075FF0C6-F997-41D9-A364-B311F6B1A4D3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5B788A4F-A818-466F-A9B8-385A7B30B1E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5B788A4F-A818-466F-A9B8-385A7B30B1E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5B788A4F-A818-466F-A9B8-385A7B30B1E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5B788A4F-A818-466F-A9B8-385A7B30B1E8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{19E8CEE1-9216-414A-83AD-52F7AD184A47}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{19E8CEE1-9216-414A-83AD-52F7AD184A47}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{19E8CEE1-9216-414A-83AD-52F7AD184A47}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{19E8CEE1-9216-414A-83AD-52F7AD184A47}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
