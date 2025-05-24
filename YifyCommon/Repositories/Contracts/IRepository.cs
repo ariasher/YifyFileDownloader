@@ -1,24 +1,21 @@
-﻿using System.Data.Common;
-using YifyCommon.Models.DataModels.Contracts;
-
-namespace YifyCommon.Repositories.Contracts
+﻿namespace YifyCommon.Repositories.Contracts
 {
-    public interface IRepository<T> where T: IModel
+    public interface IRepository<T> where T: Models.DataModels.Contracts.IModel
     {
-        int Add(T model);
+        void Add(T model);
 
-        int Update(T model);
+        void Update(T model);
 
-        int Delete(int id);
+        void Delete(int id);
 
         T Get(long id);
 
         IEnumerable<T> GetAll(bool all);
 
-        IEnumerable<T> GetAll(bool all, Func<IModel, bool> predicate);
+        IEnumerable<T> GetAll(bool all, System.Linq.Expressions.Expression<Func<T, bool>> predicate);
 
         bool Commit();
 
-        DbConnection GetDbConnection();
+        void Rollback();
     }
 }

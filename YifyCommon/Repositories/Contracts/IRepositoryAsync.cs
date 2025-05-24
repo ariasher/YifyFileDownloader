@@ -1,24 +1,21 @@
-﻿using System.Data.Common;
-using YifyCommon.Models.DataModels.Contracts;
-
-namespace YifyCommon.Repositories.Contracts
+﻿namespace YifyCommon.Repositories.Contracts
 {
-    internal interface IRepositoryAsync<T> where T: IModel
+    public interface IRepositoryAsync<T> where T: Models.DataModels.Contracts.IModel
     {
-        Task<int> AddAsync(T model);
+        Task AddAsync(T model);
 
-        Task<int> UpdateAsync(T model);
+        Task UpdateAsync(T model);
 
-        Task<int> DeleteAsync(int id);
+        Task DeleteAsync(int id);
 
         Task<T> GetAsync(long id);
 
         Task<IEnumerable<T>> GetAllAsync(bool all);
 
-        Task<IEnumerable<T>> GetAllAsync(bool all, Func<IModel, bool> predicate);
+        Task<IEnumerable<T>> GetAllAsync(bool all, System.Linq.Expressions.Expression<Func<T, bool>> predicate);
 
         Task<bool> CommitAsync();
 
-        Task<DbConnection> GetDbConnectionAsync();
+        Task RollbackAsync();
     }
 }
