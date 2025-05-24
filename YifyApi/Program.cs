@@ -1,8 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
+using Microsoft.EntityFrameworkCore;
+using YifyApi.Utilities.Helpers.ControllerHelpers;
+using YifyCommon.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
-
+//builder.Services.AddLogging(config => config.AddConsole());
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -17,6 +20,13 @@ builder.Services.AddApiVersioning(config =>
     config.ReportApiVersions = true;
     config.ApiVersionReader = new HeaderApiVersionReader("api-version");
 });
+
+builder.Services.AddDbContext<YTSDbContext>(options =>
+{
+    string connectionString = builder.Configuration.GetValue<string>("ConnectionStrings:LocalDb");
+    options.UseSqlite(connectionString);
+});
+builder.Services.AddScoped<DataControllerHelper>();
 
 var app = builder.Build();
 

@@ -12,7 +12,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Models\Transit\" />
+    <Folder Include="Models\Transit\Response\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\YifyCommon\YifyCommon.csproj" />
   </ItemGroup>
 
 </Project>
