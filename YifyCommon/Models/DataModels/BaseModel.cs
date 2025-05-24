@@ -1,10 +1,10 @@
-﻿using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using YifyCommon.Models.DataModels.Contracts;
 
 namespace YifyCommon.Models.DataModels;
 
-public abstract class BaseModel
+public abstract class BaseModel: IModel
 {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
