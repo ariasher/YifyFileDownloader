@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.EntityFrameworkCore;
-using YifyApi.Utilities.Helpers.ControllerHelpers;
+using YifyApi.Extensions;
 using YifyCommon.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -26,7 +26,8 @@ builder.Services.AddDbContext<YTSDbContext>(options =>
     string connectionString = builder.Configuration.GetValue<string>("ConnectionStrings:LocalDb");
     options.UseSqlite(connectionString);
 });
-builder.Services.AddScoped<DataControllerHelper>();
+
+builder.Services.AddServices();
 
 var app = builder.Build();
 
