@@ -7,12 +7,15 @@ namespace YifyCommon.Repositories
     {
         public IRepository<T> Repository { get; private set; }
 
-        public IRepositoryAsync<T> RepositoryAsync { get; private set; }
+        public IRepositoryAsync<T> RepositoryAwaitable { get; private set; }
 
-        public RepositoryContainer(IRepository<T> repository, IRepositoryAsync<T> repositoryAsync)
+        public IRepositoryQueryable<T> Query { get; set; }
+
+        public RepositoryContainer(IRepository<T> repository, IRepositoryAsync<T> respositoryAwaitable, IRepositoryQueryable<T> repositoryQueryable)
         {
             Repository = repository;
-            RepositoryAsync = repositoryAsync;
+            RepositoryAwaitable = respositoryAwaitable;
+            Query = repositoryQueryable;
         }
     }
 }
