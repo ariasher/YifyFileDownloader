@@ -1,8 +1,6 @@
-﻿using YifyCommon.Exceptions;
-using YifyCommon.Models.DataModels.Contracts;
+﻿using YifyCommon.Models.DataModels.Contracts;
 using YifyCommon.Persistence;
 using YifyCommon.Repositories.Contracts;
-using System.Linq.Expressions;
 
 namespace YifyCommon.Repositories
 {
@@ -60,53 +58,11 @@ namespace YifyCommon.Repositories
             return false;
         }
 
-        public void Delete(long id)
-        {
-            var model = Get(id);
-            Delete(model);
-        }
-
         public void Delete(T model)
         {
             InitiateTransactionIfNew();
             _dbContext.Remove(model);
             _dirtyWritesCount += 1;
-        }
-
-        public T Get(long id)
-        {
-            if (id <= 0)
-                throw new InvalidDataModelException($"The Data Model: {typeof(T)} with id: {id} is invalid.");
-
-            var model = _dbContext.Set<T>().Where(m => m.Id == id).FirstOrDefault();
-
-            if (model == null)
-                throw new InvalidDataModelException($"The Data Model: {typeof(T)} with id: {id} is invalid.");
-
-            return model;
-        }
-
-        public IEnumerable<T> GetAll(bool all)
-        {
-            var dbSet = _dbContext.Set<T>().AsQueryable();
-
-            if (!all)
-                dbSet = dbSet.Where(m => m.IsActive == true);
-
-            return dbSet.ToList();
-        }
-
-        public IEnumerable<T> GetAll(bool all, Expression<Func<T, bool>> predicate = null)
-        {
-            var dbSet = _dbContext.Set<T>().AsQueryable();
-
-            if (!all)
-                dbSet = dbSet.Where(m => m.IsActive == true);
-
-            if (predicate != null)
-                dbSet = dbSet.Where(predicate);
-
-            return dbSet.ToList();
         }
 
         public void Rollback()

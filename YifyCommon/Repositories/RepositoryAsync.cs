@@ -61,53 +61,11 @@ namespace YifyCommon.Repositories
             return false;
         }
 
-        public async Task DeleteAsync(long id)
-        {
-            var model = await GetAsync(id);
-            await DeleteAsync(model);
-        }
-
         public async Task DeleteAsync(T model)
         {
             await InitiateTransactionIfNewAsync();
             _dbContext.Remove(model);
             _dirtyWritesCount += 1;
-        }
-
-        public async Task<T> GetAsync(long id)
-        {
-            if (id <= 0)
-                throw new InvalidDataModelException($"The Data Model: {typeof(T)} with id: {id} is invalid.");
-
-            var model = await _dbContext.Set<T>().FirstOrDefaultAsync(m => m.Id == id);
-
-            if (model == null)
-                throw new InvalidDataModelException($"The Data Model: {typeof(T)} with id: {id} is invalid.");
-
-            return model;
-        }
-
-        public async Task<IEnumerable<T>> GetAllAsync(bool all)
-        {
-            IQueryable<T> dbSet = _dbContext.Set<T>();
-
-            if (!all)
-                dbSet = dbSet.Where(m => m.IsActive == true);
-
-            return await dbSet.ToListAsync();
-        }
-
-        public async Task<IEnumerable<T>> GetAllAsync(bool all, Expression<Func<T, bool>> predicate = null)
-        {
-            IQueryable<T> dbSet = _dbContext.Set<T>();
-
-            if (!all)
-                dbSet = dbSet.Where(m => m.IsActive == true);
-
-            if (predicate != null)
-                dbSet = dbSet.Where(predicate);
-
-            return await dbSet.ToListAsync();
         }
 
         public async Task RollbackAsync()
