@@ -61,10 +61,15 @@ namespace YifyCommon.Repositories
             return false;
         }
 
-        public async Task DeleteAsync(int id)
+        public async Task DeleteAsync(long id)
+        {
+            var model = await GetAsync(id);
+            await DeleteAsync(model);
+        }
+
+        public async Task DeleteAsync(T model)
         {
             await InitiateTransactionIfNewAsync();
-            var model = await GetAsync(id);
             _dbContext.Remove(model);
             _dirtyWritesCount += 1;
         }

@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 
 namespace YifyCommon.Repositories
 {
-    public class Repository<T> : IRepository<T> where T:class, IModel
+    public class Repository<T> : IRepository<T> where T : class, IModel
     {
         private int _dirtyWritesCount;
         private bool _transactionInitiated;
@@ -60,10 +60,15 @@ namespace YifyCommon.Repositories
             return false;
         }
 
-        public void Delete(int id)
+        public void Delete(long id)
+        {
+            var model = Get(id);
+            Delete(model);
+        }
+
+        public void Delete(T model)
         {
             InitiateTransactionIfNew();
-            var model = Get(id);
             _dbContext.Remove(model);
             _dirtyWritesCount += 1;
         }

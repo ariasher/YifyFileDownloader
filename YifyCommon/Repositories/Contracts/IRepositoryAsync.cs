@@ -6,7 +6,9 @@
 
         Task UpdateAsync(T model);
 
-        Task DeleteAsync(int id);
+        Task DeleteAsync(long id);
+
+        Task DeleteAsync(T model);
 
         Task<T> GetAsync(long id);
 

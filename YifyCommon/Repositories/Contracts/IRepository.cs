@@ -6,7 +6,9 @@
 
         void Update(T model);
 
-        void Delete(int id);
+        void Delete(long id);
+
+        void Delete(T model);
 
         T Get(long id);
 
