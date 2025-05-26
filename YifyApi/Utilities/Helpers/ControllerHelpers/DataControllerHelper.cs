@@ -1,23 +1,26 @@
-﻿using Microsoft.EntityFrameworkCore;
-using YifyApi.Models.Transit.Request;
+﻿using YifyApi.Models.Transit.Request;
 using YifyCommon.Models.DataModels;
-using YifyCommon.Persistence;
+using YifyCommon.Services.Contracts;
+using YifyCommon.Models.Constants;
 
 namespace YifyApi.Utilities.Helpers.ControllerHelpers
 {
     public class DataControllerHelper
     {
-        // TODO replace with services
-        private readonly YTSDbContext _dbContext;
-        public DataControllerHelper(YTSDbContext dbContext)
+        private readonly IMovieDetailsService _movieDetailsService;
+        private readonly ITorrentDetailsService _torrentDetailsService;
+
+        public DataControllerHelper(IMovieDetailsService movieDetailsService, ITorrentDetailsService torrentDetailsService)
         {
-            _dbContext = dbContext;
+            _movieDetailsService = movieDetailsService;
+            _torrentDetailsService = torrentDetailsService;
         }
 
         // TODO change type
         public async Task<IEnumerable<MovieDetails>> GetMovies(BaseRequestDTO requestDTO)
         {
-            return await _dbContext.MovieDetails.OrderBy(m => m.Id).Skip((requestDTO.Page - 1) < 0 ? 0 : requestDTO.Page - 1).Take(requestDTO.Limit).ToListAsync();
+            var movies = await _movieDetailsService.GetAllActiveAsync(requestDTO.Limit, requestDTO.Page, DataOrder.Ascending);
+            return movies;
         }
 
     }

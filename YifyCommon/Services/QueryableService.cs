@@ -8,7 +8,7 @@ namespace YifyCommon.Services
 {
     public class QueryableService<T> : IDataQueryService<T> where T : class, IModel
     {
-        private readonly IRepositoryQueryable<T> _queryRepository;
+        protected readonly IRepositoryQueryable<T> _queryRepository;
 
         public QueryableService(IRepositoryQueryable<T> queryRepository)
         {

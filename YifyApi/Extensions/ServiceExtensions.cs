@@ -18,6 +18,8 @@ namespace YifyApi.Extensions
             service.AddScoped(typeof(IDataManipulationService<>), typeof(Service<>));
             service.AddScoped(typeof(IDataManipulationServiceAsync<>), typeof(Service<>));
             service.AddScoped(typeof(IDataQueryService<>), typeof(Service<>));
+            service.AddScoped<IMovieDetailsService, MovieDetailsService>();
+            service.AddScoped<ITorrentDetailsService, TorrentDetailsService>();
         }
     }
 }

@@ -6,8 +6,8 @@ namespace YifyCommon.Services
 {
     public class Service<T> : QueryableService<T>, IDataManipulationService<T>, IDataManipulationServiceAsync<T> where T: class, IModel
     {
-        private readonly IRepository<T> _repository;
-        private readonly IRepositoryAsync<T> _repositoryAwaitable;
+        protected readonly IRepository<T> _repository;
+        protected readonly IRepositoryAsync<T> _repositoryAwaitable;
 
         public Service(IRepositoryContainer<T> container) : base(container.Query)
         {
