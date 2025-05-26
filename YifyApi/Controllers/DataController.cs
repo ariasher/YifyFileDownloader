@@ -5,6 +5,7 @@ using YifyApi.Models.Transit.Request;
 using YifyApi.Models.Transit.Response.Contracts;
 using YifyApi.Utilities.Helpers;
 using YifyApi.Utilities.Helpers.ControllerHelpers;
+using YifyApi.Validations;
 
 namespace YifyApi.Controllers
 {
@@ -37,7 +38,15 @@ namespace YifyApi.Controllers
 
             try
             {
-                // TODO Validation
+                var validation = new ValidateBaseRequestDto();
+                var validationResult = validation.Validate(request);
+
+                if (!validationResult.Status)
+                {
+                    response = ResponseHelper.GetErrorResponse("Validation error.", validationResult.Errors);
+                    return BadRequest(response);
+                }
+
                 var moviesList = await _helper.GetMovies(request);
 
                 if (moviesList == null)
