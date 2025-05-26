@@ -1,4 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
+using YifyCommon.Exceptions;
+using YifyCommon.Extensions;
 using YifyCommon.Models.Constants;
 using YifyCommon.Models.DataModels.Contracts;
 using YifyCommon.Repositories.Contracts;
@@ -19,7 +22,75 @@ namespace YifyCommon.Services
         {
             try
             {
-                return _queryRepository.Get(id);
+                if (id <= 0)
+                    throw new InvalidDataModelException($"The Data Model: {typeof(T)} with id: {id} is invalid.");
+
+                var model = _queryRepository.GetAll(false).Where(r => r.Id == id).FirstOrDefault();
+
+                if (model == null)
+                    throw new InvalidDataModelException($"The Data Model: {typeof(T)} with id: {id} is invalid.");
+
+                return model;
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public T Get<TProperty>(long id, Expression<Func<T, TProperty>> include)
+        {
+            try
+            {
+                if (id <= 0)
+                    throw new InvalidDataModelException($"The Data Model: {typeof(T)} with id: {id} is invalid.");
+
+                var model = _queryRepository.GetAll(false).Where(r => r.Id == id).Include(include).FirstOrDefault();
+
+                if (model == null)
+                    throw new InvalidDataModelException($"The Data Model: {typeof(T)} with id: {id} is invalid.");
+
+                return model;
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public async Task<T> GetAsync(long id)
+        {
+            try
+            {
+                if (id <= 0)
+                    throw new InvalidDataModelException($"The Data Model: {typeof(T)} with id: {id} is invalid.");
+
+                var model = await _queryRepository.GetAll(false).Where(r => r.Id == id).FirstOrDefaultAsync();
+
+                if (model == null)
+                    throw new InvalidDataModelException($"The Data Model: {typeof(T)} with id: {id} is invalid.");
+
+                return model;
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public async Task<T> GetAsync<TProperty>(long id, Expression<Func<T, TProperty>> include)
+        {
+            try
+            {
+                if (id <= 0)
+                    throw new InvalidDataModelException($"The Data Model: {typeof(T)} with id: {id} is invalid.");
+
+                var model = await _queryRepository.GetAll(false).Where(r => r.Id == id).Include(include).FirstOrDefaultAsync();
+
+                if (model == null)
+                    throw new InvalidDataModelException($"The Data Model: {typeof(T)} with id: {id} is invalid.");
+
+                return model;
             }
             catch
             {
@@ -31,15 +102,20 @@ namespace YifyCommon.Services
         {
             try
             {
-                var records = _queryRepository.GetAll(true);
+                var records = _queryRepository.GetAll(true).ApplyDataOrder(order);
+                return records.ToList();
+            }
+            catch
+            {
+                throw;
+            }
+        }
 
-                records = order switch
-                {
-                    DataOrder.Ascending => records.OrderBy(r => r.Id),
-                    DataOrder.Descending => records.OrderByDescending(r => r.Id),
-                    _ => records
-                };
-
+        public IEnumerable<T> GetAll<TProperty>(Expression<Func<T,TProperty>> include, DataOrder order = DataOrder.None)
+        {
+            try
+            {
+                var records = _queryRepository.GetAll(true).Include(include).ApplyDataOrder(order);
                 return records.ToList();
             }
             catch
@@ -63,6 +139,21 @@ namespace YifyCommon.Services
             }
         }
 
+        public IEnumerable<T> GetAll<TProperty>(int limit, Expression<Func<T, TProperty>> include, DataOrder order = DataOrder.None)
+        {
+            try
+            {
+                if (limit < 0)
+                    throw new InvalidDataException($"The limit parameter with value {limit} is invalid.");
+
+                return GetAll(limit, 1, include, order);
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
         public IEnumerable<T> GetAll(int limit, int page, DataOrder order = DataOrder.None)
         {
             try
@@ -73,16 +164,27 @@ namespace YifyCommon.Services
                 if (page < 1)
                     throw new InvalidDataException($"The page parameter with value {page} is invalid.");
 
-                var records = _queryRepository.GetAll(true);
+                var records = _queryRepository.GetAll(true).ApplyDataOrder(order).Paginate(page, limit);
+                return records.ToList();
+            }
+            catch
+            {
+                throw;
+            }
+        }
 
-                records = order switch
-                {
-                    DataOrder.Ascending => records.OrderBy(r => r.Id),
-                    DataOrder.Descending => records.OrderByDescending(r => r.Id),
-                    _ => records
-                };
+        public IEnumerable<T> GetAll<TProperty>(int limit, int page, Expression<Func<T, TProperty>> include, DataOrder order = DataOrder.None)
+        {
+            try
+            {
+                if (limit < 1)
+                    throw new InvalidDataException($"The limit parameter with value {limit} is invalid.");
 
-                return records.Skip(page - 1).Take(limit).ToList();
+                if (page < 1)
+                    throw new InvalidDataException($"The page parameter with value {page} is invalid.");
+
+                var records = _queryRepository.GetAll(true).Include(include).ApplyDataOrder(order).Paginate(page, limit);
+                return records.ToList();
             }
             catch
             {
@@ -94,15 +196,20 @@ namespace YifyCommon.Services
         {
             try
             {
-                var records = _queryRepository.GetAll(false);
+                var records = _queryRepository.GetAll(false).ApplyDataOrder(order);
+                return records.ToList();
+            }
+            catch
+            {
+                throw;
+            }
+        }
 
-                records = order switch
-                {
-                    DataOrder.Ascending => records.OrderBy(r => r.Id),
-                    DataOrder.Descending => records.OrderByDescending(r => r.Id),
-                    _ => records
-                };
-
+        public IEnumerable<T> GetAllActive<TProperty>(Expression<Func<T, TProperty>> include, DataOrder order = DataOrder.None)
+        {
+            try
+            {
+                var records = _queryRepository.GetAll(false).Include(include).ApplyDataOrder(order);
                 return records.ToList();
             }
             catch
@@ -126,6 +233,21 @@ namespace YifyCommon.Services
             }
         }
 
+        public IEnumerable<T> GetAllActive<TProperty>(int limit, Expression<Func<T, TProperty>> include, DataOrder order = DataOrder.None)
+        {
+            try
+            {
+                if (limit < 0)
+                    throw new InvalidDataException($"The limit parameter with value {limit} is invalid.");
+
+                return GetAllActive(limit, 1, include, order);
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
         public IEnumerable<T> GetAllActive(int limit, int page, DataOrder order = DataOrder.None)
         {
             try
@@ -136,16 +258,27 @@ namespace YifyCommon.Services
                 if (page < 1)
                     throw new InvalidDataException($"The page parameter with value {page} is invalid.");
 
-                var records = _queryRepository.GetAll(false);
+                var records = _queryRepository.GetAll(false).ApplyDataOrder(order).Paginate(page, limit);
+                return records.ToList();
+            }
+            catch
+            {
+                throw;
+            }
+        }
 
-                records = order switch
-                {
-                    DataOrder.Ascending => records.OrderBy(r => r.Id),
-                    DataOrder.Descending => records.OrderByDescending(r => r.Id),
-                    _ => records
-                };
+        public IEnumerable<T> GetAllActive<TProperty>(int limit, int page, Expression<Func<T, TProperty>> include, DataOrder order = DataOrder.None)
+        {
+            try
+            {
+                if (limit < 1)
+                    throw new InvalidDataException($"The limit parameter with value {limit} is invalid.");
 
-                return records.Skip(page - 1).Take(limit).ToList();
+                if (page < 1)
+                    throw new InvalidDataException($"The page parameter with value {page} is invalid.");
+
+                var records = _queryRepository.GetAll(false).Include(include).ApplyDataOrder(order).Paginate(page, limit);
+                return records.ToList();
             }
             catch
             {
@@ -157,15 +290,20 @@ namespace YifyCommon.Services
         {
             try
             {
-                var records = _queryRepository.GetAll(false);
+                var records = _queryRepository.GetAll(false).ApplyDataOrder(order);
+                return await records.ToListAsync();
+            }
+            catch
+            {
+                throw;
+            }
+        }
 
-                records = order switch
-                {
-                    DataOrder.Ascending => records.OrderBy(r => r.Id),
-                    DataOrder.Descending => records.OrderByDescending(r => r.Id),
-                    _ => records
-                };
-
+        public async Task<IEnumerable<T>> GetAllActiveAsync<TProperty>(Expression<Func<T, TProperty>> include, DataOrder order = DataOrder.None)
+        {
+            try
+            {
+                var records = _queryRepository.GetAll(false).Include(include).ApplyDataOrder(order);
                 return await records.ToListAsync();
             }
             catch
@@ -189,6 +327,21 @@ namespace YifyCommon.Services
             }
         }
 
+        public async Task<IEnumerable<T>> GetAllActiveAsync<TProperty>(int limit, Expression<Func<T, TProperty>> include, DataOrder order = DataOrder.None)
+        {
+            try
+            {
+                if (limit < 0)
+                    throw new InvalidDataException($"The limit parameter with value {limit} is invalid.");
+
+                return await GetAllActiveAsync(limit, 1, include, order);
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
         public async Task<IEnumerable<T>> GetAllActiveAsync(int limit, int page, DataOrder order = DataOrder.None)
         {
             try
@@ -199,16 +352,27 @@ namespace YifyCommon.Services
                 if (page < 1)
                     throw new InvalidDataException($"The page parameter with value {page} is invalid.");
 
-                var records = _queryRepository.GetAll(false);
+                var records = _queryRepository.GetAll(false).ApplyDataOrder(order).Paginate(page, limit);
+                return await records.ToListAsync();
+            }
+            catch
+            {
+                throw;
+            }
+        }
 
-                records = order switch
-                {
-                    DataOrder.Ascending => records.OrderBy(r => r.Id),
-                    DataOrder.Descending => records.OrderByDescending(r => r.Id),
-                    _ => records
-                };
+        public async Task<IEnumerable<T>> GetAllActiveAsync<TProperty>(int limit, int page, Expression<Func<T, TProperty>> include, DataOrder order = DataOrder.None)
+        {
+            try
+            {
+                if (limit < 1)
+                    throw new InvalidDataException($"The limit parameter with value {limit} is invalid.");
 
-                return await records.Skip(page - 1).Take(limit).ToListAsync();
+                if (page < 1)
+                    throw new InvalidDataException($"The page parameter with value {page} is invalid.");
+
+                var records = _queryRepository.GetAll(false).Include(include).ApplyDataOrder(order).Paginate(page, limit);
+                return await records.ToListAsync();
             }
             catch
             {
@@ -220,15 +384,20 @@ namespace YifyCommon.Services
         {
             try
             {
-                var records = _queryRepository.GetAll(true);
+                var records = _queryRepository.GetAll(true).ApplyDataOrder(order);
+                return await records.ToListAsync();
+            }
+            catch
+            {
+                throw;
+            }
+        }
 
-                records = order switch
-                {
-                    DataOrder.Ascending => records.OrderBy(r => r.Id),
-                    DataOrder.Descending => records.OrderByDescending(r => r.Id),
-                    _ => records
-                };
-
+        public async Task<IEnumerable<T>> GetAllAsync<TProperty>(Expression<Func<T, TProperty>> include, DataOrder order = DataOrder.None)
+        {
+            try
+            {
+                var records = _queryRepository.GetAll(true).Include(include).ApplyDataOrder(order);
                 return await records.ToListAsync();
             }
             catch
@@ -252,6 +421,21 @@ namespace YifyCommon.Services
             }
         }
 
+        public async Task<IEnumerable<T>> GetAllAsync<TProperty>(int limit, Expression<Func<T, TProperty>> include, DataOrder order = DataOrder.None)
+        {
+            try
+            {
+                if (limit < 0)
+                    throw new InvalidDataException($"The limit parameter with value {limit} is invalid.");
+
+                return await GetAllAsync(limit, 1, include, order);
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
         public async Task<IEnumerable<T>> GetAllAsync(int limit, int page, DataOrder order = DataOrder.None)
         {
             try
@@ -262,16 +446,28 @@ namespace YifyCommon.Services
                 if (page < 1)
                     throw new InvalidDataException($"The page parameter with value {page} is invalid.");
 
-                var records = _queryRepository.GetAll(true);
+                var records = _queryRepository.GetAll(true).ApplyDataOrder(order).Paginate(page, limit);
+                return await records.ToListAsync();
+            }
+            catch
+            {
+                throw;
+            }
+        }
 
-                records = order switch
-                {
-                    DataOrder.Ascending => records.OrderBy(r => r.Id),
-                    DataOrder.Descending => records.OrderByDescending(r => r.Id),
-                    _ => records
-                };
 
-                return await records.Skip(page - 1).Take(limit).ToListAsync();
+        public async Task<IEnumerable<T>> GetAllAsync<TProperty>(int limit, int page, Expression<Func<T, TProperty>> include, DataOrder order = DataOrder.None)
+        {
+            try
+            {
+                if (limit < 1)
+                    throw new InvalidDataException($"The limit parameter with value {limit} is invalid.");
+
+                if (page < 1)
+                    throw new InvalidDataException($"The page parameter with value {page} is invalid.");
+
+                var records = _queryRepository.GetAll(true).Include(include).ApplyDataOrder(order).Paginate(page, limit);
+                return await records.ToListAsync();
             }
             catch
             {

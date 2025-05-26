@@ -1,4 +1,5 @@
-﻿using System.Linq.Expressions;
+﻿using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 using YifyCommon.Exceptions;
 using YifyCommon.Models.DataModels.Contracts;
 using YifyCommon.Persistence;
@@ -13,19 +14,6 @@ namespace YifyCommon.Repositories
         public RepositoryQueryable(YTSDbContext dbContext)
         {
             _dbContext = dbContext;
-        }
-
-        public T Get(long id)
-        {
-            if (id <= 0)
-                throw new InvalidDataModelException($"The Data Model: {typeof(T)} with id: {id} is invalid.");
-
-            var model = _dbContext.Set<T>().Where(m => m.Id == id).FirstOrDefault();
-
-            if (model == null)
-                throw new InvalidDataModelException($"The Data Model: {typeof(T)} with id: {id} is invalid.");
-
-            return model;
         }
 
         public IQueryable<T> GetAll(bool all)
