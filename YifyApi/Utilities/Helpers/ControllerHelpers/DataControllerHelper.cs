@@ -20,7 +20,6 @@ namespace YifyApi.Utilities.Helpers.ControllerHelpers
             _mapper = mapper;
         }
 
-        // TODO change type
         public async Task<IEnumerable<MovieDTO>> GetMovies(BaseRequestDTO requestDTO)
         {
             var movies = await _movieDetailsService.GetAllActiveAsync(requestDTO.Limit, requestDTO.Page, DataOrder.Ascending);

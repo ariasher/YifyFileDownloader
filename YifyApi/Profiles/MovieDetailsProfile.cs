@@ -10,15 +10,15 @@ namespace YifyApi.Profiles
         {
             CreateMap<MovieDetails, MovieDTO>()
                 .ForMember(dest => dest.CreatedAt,
-                       opt => opt.MapFrom(src => src.CreatedAt.ToString("dd-MM-yyyy hh:mm:stt")))
+                       opt => opt.MapFrom(src => src.CreatedAt.ToString("dd-MM-yyyy hh:mm:ss tt")))
                 .ForMember(dest => dest.UpdatedAt,
-                       opt => opt.MapFrom(src => src.UpdatedAt.ToString("dd-MM-yyyy hh:mm:sstt")));
+                       opt => opt.MapFrom(src => src.UpdatedAt.ToString("dd-MM-yyyy hh:mm:ss tt")));
 
             CreateMap<MovieDetails, MovieWithTorrentDTO>()
                 .ForMember(dest => dest.CreatedAt,
-                       opt => opt.MapFrom(src => src.CreatedAt.ToString("dd-MM-yyyy hh:mm:sstt")))
+                       opt => opt.MapFrom(src => src.CreatedAt.ToString("dd-MM-yyyy hh:mm:ss tt")))
                 .ForMember(dest => dest.UpdatedAt,
-                       opt => opt.MapFrom(src => src.UpdatedAt.ToString("dd-MM-yyyy hh:mm:sstt")));                
+                       opt => opt.MapFrom(src => src.UpdatedAt.ToString("dd-MM-yyyy hh:mm:ss tt")));                
         }
     }
 }

@@ -1,6 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System.Net;
-using System.Threading.Tasks;
 using YifyApi.Models.Transit.Request;
 using YifyApi.Models.Transit.Response.Contracts;
 using YifyApi.Utilities.Helpers;
@@ -14,12 +12,12 @@ namespace YifyApi.Controllers
     public class DataController : ControllerBase
     {
         private readonly DataControllerHelper _helper;
-        private readonly ILogger _logger;
+        private readonly ILogger<DataController> _logger;
 
-        public DataController(DataControllerHelper helper)//, ILogger logger)
+        public DataController(DataControllerHelper helper, ILogger<DataController> logger)
         {
             _helper = helper;
-            //_logger = logger;
+            _logger = logger;
         }
 
         [HttpGet]
@@ -40,7 +38,7 @@ namespace YifyApi.Controllers
             {
                 var validation = new ValidateBaseRequestDto();
                 var validationResult = validation.Validate(request);
-
+                _logger.LogInformation("Validated");
                 if (!validationResult.Status)
                 {
                     response = ResponseHelper.GetErrorResponse("Validation error.", validationResult.Errors);
@@ -62,11 +60,17 @@ namespace YifyApi.Controllers
             catch (Exception ex)
             {
                 response = ResponseHelper.GetErrorResponse("An error occurred.");
-                // TODO Log
+                AddErrorLog(nameof(MoviesList), ex);
                 return BadRequest(response);
             }
-            
         }
 
+        private void AddErrorLog(string method, Exception ex)
+        {
+            _logger.LogError($"Exception in {method}. Error: {ex.Message}.", ex.StackTrace);
+
+            if (ex.InnerException != null)
+                _logger.LogError(ex.InnerException.Message, ex.InnerException.StackTrace);
+        }
     }
 }
