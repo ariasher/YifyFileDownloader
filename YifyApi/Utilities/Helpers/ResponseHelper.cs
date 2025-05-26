@@ -6,7 +6,7 @@ namespace YifyApi.Utilities.Helpers
 {
     public class ResponseHelper
     {
-        public ResponseDTO GetSuccessResponse(string message = "OK", object? data = null)
+        public static ResponseDTO GetSuccessResponse(string message = "OK", object? data = null)
         => new ResponseDTO
         {
             Message = message,
@@ -14,7 +14,7 @@ namespace YifyApi.Utilities.Helpers
             Status = ResponseStatus.Success.Name()
         };
 
-        public ResponseDTO GetErrorResponse(string message, object? data = null)
+        public static ResponseDTO GetErrorResponse(string message, object? data = null)
         => new ResponseDTO
         {
             Message = message,

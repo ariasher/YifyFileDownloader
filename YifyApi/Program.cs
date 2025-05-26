@@ -23,11 +23,12 @@ builder.Services.AddApiVersioning(config =>
 
 builder.Services.AddDbContext<YTSDbContext>(options =>
 {
-    string connectionString = builder.Configuration.GetValue<string>("ConnectionStrings:LocalDb");
+    string connectionString = builder.Configuration.GetValue<string>("ConnectionStrings:LocalDb") ?? string.Empty;
     options.UseSqlite(connectionString);
 });
 
 builder.Services.AddServices();
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 var app = builder.Build();
 

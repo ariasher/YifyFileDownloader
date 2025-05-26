@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Net;
 using System.Threading.Tasks;
 using YifyApi.Models.Transit.Request;
+using YifyApi.Models.Transit.Response.Contracts;
+using YifyApi.Utilities.Helpers;
 using YifyApi.Utilities.Helpers.ControllerHelpers;
 
 namespace YifyApi.Controllers
@@ -28,12 +31,33 @@ namespace YifyApi.Controllers
 
         [HttpGet]
         [Route("Movies")]
-        public async Task<IActionResult> MoviesList([FromQuery]BaseRequestDTO request)
+        public async Task<IActionResult> MoviesList([FromQuery] BaseRequestDTO request)
         {
-            // TODO Validation
-            var moviesList = await _helper.GetMovies(request);
+            IResponseDTO response;
 
-            return Ok(moviesList);
+            try
+            {
+                // TODO Validation
+                var moviesList = await _helper.GetMovies(request);
+
+                if (moviesList == null)
+                {
+                    response = ResponseHelper.GetErrorResponse("No record found.");
+                    return BadRequest(response);
+                }
+
+                string message = moviesList.Count() > 0 ? "OK" : "No record found.";
+                response = ResponseHelper.GetSuccessResponse(message, moviesList);
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                response = ResponseHelper.GetErrorResponse("An error occurred.");
+                // TODO Log
+                return BadRequest(response);
+            }
+            
         }
+
     }
 }
